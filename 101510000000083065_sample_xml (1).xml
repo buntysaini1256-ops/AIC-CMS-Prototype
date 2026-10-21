@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="caselaw.xsl"?>
+<document id="101510000000083065">
+	<header>
+		<db_categories>
+			<db_parentcategory id="111050000000000002" name="DIRECT TAX LAWS">
+				<db_category id="111050000000009187" name="DIRECT TAX LAWS"/>
+			</db_parentcategory>
+		</db_categories>
+		<db_groups>
+			<db_group id="111050000000000060" name="CASELAWS"/>
+		</db_groups>
+		<db_internationaltaxation>
+			<db_subjects/>
+			<db_articles/>
+			<db_countries/>
+		</db_internationaltaxation>
+		<db_createdate>1/17/2013 4:06:13 PM</db_createdate>
+		<db_updatedate>1/17/2013 8:55:28 PM</db_updatedate>
+		<db_slp id=""/>
+		<db_citation year="2013" volume="29" journal="taxmann.com" pageno="78" bench="Mumbai" sbtm="" magothertype=""/>
+		<db_crosspondingcitation/>
+		<db_court id="111070000000000011" prebench="IN THE " postbench=" MUMBAI BENCH 'I'">ITAT</db_court>
+		<dbs_party1 id="">Indorama Software Solution Ltd.</dbs_party1>
+		<dbs_party2 id="">Income-tax Officer, Ward 9(2)-1, Mumbai<link type="foot" display="normal" id="rfn1" href="#fn1">*</link>
+		</dbs_party2>
+		<dbs_judge>
+			<db_judgename id="111170000000056962">VIJAY PAL RAO</db_judgename>, JUDICIAL MEMBER AND        <db_judgename id="111170000000033654">N.K. BILLAIYA</db_judgename>, ACCOUNTANT MEMBER     </dbs_judge>
+		<dbs_appeal AY="ASSESSMENT YEAR 2003-04">IT APPEAL NOS. 5211 AND 5290 (MUM.) OF 2011</dbs_appeal>
+		<db_orderdate yyyy="2012" mm="9" dd="7"/>
+		<dbs_summary>
+			<para class="threedigest">IT : Where notice under section 148 was issued by Assessing Officer who was not vested with jurisdiction over assessee, same was patently illegal and void and, thus, reassessment proceedings initiated in pursuance of said notice were liable to be set aside</para>
+		</dbs_summary>
+	</header>
+	<body>
+		<digest>
+			<headnotes>
+				<headnote id="">Section <dbs_section id="111210000000000444">148</dbs_section>, read with section <dbs_section id="111210000000000315">120</dbs_section>, of the <dbs_act id="102010000000000337">Income-tax Act, 1961</dbs_act> - <db_heading id="111130000000006614">Income escaping  assessment</db_heading> - <db_subheading id="111130000000006640">Issue of notice for</db_subheading> - Jurisdiction of Assessing Officer -  Assessment year <db_asstyear id="101140000000067868">2003-04</db_asstyear>  - Whether notice under section 148 is required to be issued by Assessing Officer who is vested with jurisdiction over assessee on basis of criteria of territorial area, or classes of persons, or classes of incomes as enumerated in sub-section (3) of section 120 - Held, yes - Whether, therefore, where notice under section 148 was issued by Assessing Officer who was not vested with jurisdiction over assessee on basis of any of aforesaid criteria, same was patently illegal and void and, thus, reassessment proceedings in pursuance of said notice were liable to be set aside - Held, yes [Para 11] [In favour of assessee] </headnote>
+			</headnotes>
+			<text>
+				<para class="fact">FACTS</para>
+				<list level="1" type="none">
+					<li>
+						<label>• </label>
+						<para>For the relevant assessment year, assessment was completed under section 143(3) wherein assessee's claim for set off of unabsorbed losses was accepted.</para>
+					</li>
+					<li>
+						<label>• </label>
+						<para>Subsequently, the Assessing Officer initiated reassessment proceedings by issuing a notice under section 148.</para>
+					</li>
+					<li>
+						<label>• </label>
+						<para>The assessee challenged validity of reassessment proceedings on the ground that due to change of address of assessee, the Assessing Officer who issued notice under section 148 did not have jurisdiction to issue said notice and, thus, notice so issued was invalid.</para>
+					</li>
+					<li>
+						<label>• </label>
+						<para>The Assessing Officer did not dispute the fact that the Assessing Officer who had issued notice under section 148 was not having any jurisdiction over the assessee. However, the objection of the assessee was rejected on the reasoning that when the final decision in respect of reassessment proceedings had been taken by the Assessing Officer who was having the jurisdiction, then, there was no violation of provisions of law.</para>
+					</li>
+					<li>
+						<label>• </label>
+						<para>The Commissioner (Appeals) upheld the order of Assessing Officer.</para>
+					</li>
+					<li>
+						<label>• </label>
+						<para>On second appeal:</para>
+					</li>
+				</list>
+				<para class="fact">HELD</para>
+				<list level="1" type="none">
+					<li>
+						<label>• </label>
+						<para>
+							<i>The notice under section 148 is required to be issued by the Assessing Officer who is vested with the jurisdiction over the assessee on the basis of the criteria of territorial area, a person or classes of persons, income or classes of incomes and cases or classes of cases as enumerated in sub-section </i>( <i>3</i>)<i> of section 120. It is not the case of the revenue that the Assessing Officer who has issued the notice under section 148 was vested with the jurisdiction by virtue of any direction or orders issued under sub-section (1) or (2) of section 120.</i>
+						</para>
+					</li>
+					<li>
+						<label>• </label>
+						<para>
+							<i>When it is apparent that the notice under section 148 was issued by the Assessing Officer who was not vested with the jurisdiction over the assessee then, the same was patently illegal and void. Consequently, the reassessment proceedings and order in pursuant to the illegal notice under section 148 are also </i>void ab initio<i> and liable to be set aside. [Para 11]</i>
+						</para>
+					</li>
+				</list>
+			</text>
+			<dbs_casereffered> </dbs_casereffered>
+			<dbs_members>
+				<db_counsela id="111170000000058330">N.H. Gajria</db_counsela>
+				<i> for the Appellant. </i>
+				<db_counselr id="111170000000021218">K.G. Kutty</db_counselr>
+				<i> for the Respondent.</i>
+			</dbs_members>
+		</digest>
+		<caseOrder>
+			<order>
+				<para class="fact">ORDER</para>
+				<para>
+					<b>Vijay Pal Rao, Judicial Member - </b>These cross appeals are directed against the order dated 23.5.2011 of CIT (A) for the assessment year 2003-2004.</para>
+				<para>
+					<b>2.</b> The assessee filed return of income declaring income at Rs. NIL after setting off un-absorbed losses of Rs. 7,74,956/-. The assessment was completed u/s 143(3) resulting NIL income after allowing the set off unabsorbed losses of the earlier years. Subsequently, a notice u/s 148 was issued on 31.3.2010 on the reason that there was a change in the shareholding in the previous year in the case of the assessee which is more than 99% of the shareholding of the company and, therefore, as per section 79, the losses incurred in any previous year prior to the previous year shall not be carry forward and set off against the income of the previous year in which there is a change in the shareholding of more than 51%. The assessee raised an objection of validation of notice issued u/s 148 <i>inter alia</i> on the ground that the Assessing Officer who has issued the notice u/s 148 was not having jurisdiction over the assessee. The Assessing Officer who has completed the re-assessment did not accept the contention and objection of the assessee and completed the re-assessment vide order dated 22.11.2010. On appeal, the CIT (A) though rejected the objection raised by the assessee on the validity of the notice issued u/s 148, however allowed the claim of the assessee of carried forward and setting off the losses of the earlier years'. Thus, both the assessee as well as the Revenue are aggrieved by the impugned order of CIT (A) and filed respective appeals.</para>
+				<para>
+					<b>3.</b> The assessee has raised the following grounds in its appeal:</para>
+				<list level="1" type="none">
+					<li>
+						<label>"1. </label>
+						<para>On the facts and circumstances of the case, the CIT (A) has erred in confirming the reopening of the assessment proceedings u/s 148 of the Act as a valid proceedings, though the notice u/s 148 of the Act was issued by the Assessing Officer who did not hold the territorial jurisdiction over the appellant.</para>
+					</li>
+					<li>
+						<label>2. </label>
+						<para>On the facts and circumstances of the case, the CIT (A) has erred in confirming the reopening of the assessment proceedings u/s 148 of the Act as a valid proceedings beyond the period of 4 years though the subject matter had come to the knowledge of the Assessing Officer with a period of four years.</para>
+					</li>
+					<li>
+						<label>3. </label>
+						<para>On the facts and circumstances of the case, the CIT (A) has erred in confirming the reopening of the assessment proceedings u/s 148 of the Act as a valid proceedings in spite of change of opinion between the two Assessing Officers."</para>
+					</li>
+				</list>
+				<para>
+					<b>4.</b> The Revenue has raised the only effective ground as under:</para>
+				<para class="quote">"On the facts and in the circumstances of the case and in law, the Ld. CIT (A) erred in allowing the assessee to set off its earlier losses holding that section 79 of the IT Act, 1961 does not apply in the assessee's case without appreciating the provisions of section 79 and that the Law does not envisage mere application of Share Application Money as Share Capital."</para>
+				<para>
+					<b>5.</b> First, we take up the appeal of the assessee as the issue of validity of notice u/s 148 has been raised which goes to the root of the matter. As evident from the ground raised by the assessee, the assessee has challenged the reopening on three grounds viz. (<i>i</i>) The AO who has issued the notice u/s 148 was lacking the jurisdiction over the assessee (<i>ii</i>) The reopening is beyond the period of four years, therefore, in the absence of failure on the part of the assessee to disclose fully and truly all relevant material necessary for assessment, the reopening is barred and hit by the proviso to section 147 and (<i>iii</i> ) The reopening is based on change of opinion between the two Assessing Officers. As regards the first objection against the validity of reopening, the learned AR of the assessee has submitted that the original assessment made u/s 143(3) on 28.9.2005 by the ITO, Ward-10(3)-4, Mumbai. Thereafter, the address of the company was changed and consequently, the jurisdiction of the Assessing Officer was also changed. Accordingly, the case papers were transferred to the ITO, Ward-9(2)-1, Mumbai. The learned AR of the assessee has further submitted that the assessment of the assessee for the assessment year 2007-2008 was made u/s 143(3) of the Income Tax Act by the ITO, Ward-9(2)-1, Mumbai on 27.11.2009, whereas, the notice u/s 148 for the assessment year under consideration was issued on 31.3.2010 by the ITO, Ward-10(3)-4 who had already transferred the case papers to the ITO and, therefore, was having no jurisdiction over the assessee. Thus, the learned AR has submitted that the notice issued u/s 148 is invalid as was issued by the ITO who was not having the jurisdiction over the assessee's case.</para>
+				<para>
+					<b>6.</b> On the other hand, the learned DR has submitted that when the AO as well as the CIT (A) has already dealt with the issue of validity of notice issued u/s 148 on the ground of jurisdiction, then, there is no merit in the objection of the assessee. He has further submitted that when the assessment has been concluded by the ITO, Ward-9(2)-1 who has administrative jurisdiction on the assessee, then, the objection of jurisdiction raised by the assessee is not tenable. He has relied upon the order of the CIT (A) and Assessing Officer on this point.</para>
+				<para>
+					<b>7.</b> We have considered the rival submissions as well as the relevant material on record. There is no dispute on the point that the original assessment was completed by the ITO, Ward-10(3)-4, Mumbai and, thereafter due to change of the address of the assessee, the jurisdiction of the Assessing Officer was also changed from ITO, Ward-10(3)-4 to ITO, Ward-9(2)-1. After completion of the assessment u/s 143(3) for the year under consideration, the assessment for the assessment year 2007-2008 was completed u/s 143(3) by the ITO, Ward-9(2)-1 on 27.11.2009. There is no ambiguity or any doubt on this fact that when the assessment for the assessment year 2007-2008 was completed on 27.11.2009 by the ITO, Ward-9(2)-1 who was having jurisdiction over the assessee as taken over from the ITO, Ward-10(3)-4 due to change of the address of the assessee. Thus, it is clear that when the notice u/s 148 of the Income Tax Act issued on 31.3.2010, the ITO, Ward-10(3)-4 was ceased to have any jurisdiction being an Assessing Officer over the assessee. It appears that after issuing the notice u/s 148, the Assessing Officer, who has issued the said notice, realized the lack of jurisdiction over the assessee and accordingly the reassessment was undertaken by the Assessing Officer-ITO, Ward-9(2)-1, Mumbai having jurisdiction over the assessee. The assessee raised the objection regarding validity of notice issued u/s 148 due to lack of jurisdiction of the Assessing Officer who has issued the notice. The AO rejected the objection raised by the assessee and observed in para 6 as under:</para>
+				<para class="quote">"With respect to your 1st contention that the notice u/s 148 loses its jurisdiction, it needs to be stated that the Officer issuing the notice u/s 148 was the officer holding jurisdiction over you and had accordingly completed assessment proceedings u/s 143(3). Further, even if it is assumed, though no accepted, that the notice had been issued by ITO-10(3)(4), what is paramount is who is the Officer with the right jurisdiction and whether the same officer is taking the final decision in respect of the assessment proceedings. Thus, the moment the current officer taken the final decision on the subject matter of reassessment, no process of law or provisions of the Act are vitiated."</para>
+				<para>
+					<b>8.</b> It is manifest from the assessment order that the AO has not really disputed this fact that the Assessing Officer who had issued notice u/s 148 was not having any jurisdiction over the assessee. However, the objection of the assessee was rejected on the reasoning that when the final decision in respect of reassessment proceedings has been taken by the AO who is having the jurisdiction, then, there is no violation of provisions of law of the Act. Similarly, the CIT (A) has also rejected the objection raised by the assessee in para 2.3 as under:</para>
+				<para class="quote">"I have perused the assessment order and the written submissions. The issue of administrative jurisdiction has been addressed by the AO while disposing of its objection at page-3 para-6 of the assessment order. I am in agreement with stand taken by the AO. As no point of time to the jurisdiction was held by two officers while the proceedings have been initiated by ITO-10(3)(4) but has been concluded by ITO 9(2)(1) who have administrative jurisdiction of the case. In any case, the issue of territorial / administrative jurisdiction does not carry much weight. As regards the legal objection on change of opinion, after perusal of the original assessment order it cannot be inferred that this issue was specifically examined therein. Taking into account all the facts and circumstances, ground no.1 is rejected."</para>
+				<para>
+					<b>9. </b>Though, both AO and CIT (A) has not disputed the factual position that before the notice u/s 148 was issued, the jurisdiction was transferred from the Assessing Officer who has issued the notice u/s 148 and even the assessment for the assessment year 2007-2008 was completed by the new Assessing Officer who was having jurisdiction over the assessee before the said notice u/s 148 was issued.</para>
+				<para>
+					<b>10. </b>We are conscious that the issue of the question of jurisdiction of Assessing Officer cannot be raised first time before us after completion of the assessment but, since the assessee has raised this objection right from the beginning and the Assessing Officer as well as CIT (A) has given a finding, therefore, this issue does not question the jurisdiction of the AO who has completed the re-assessment but questions the validity of Notice u/s 148 and emanates from the impugned orders of the authorities below. The definition of the Assessing Officer as provided u/s 2(7A) of the Income Tax Act means "the Assistant Commissioner or Deputy Commissioner or Assistant Director or Deputy Director or ITO who has vested with the relevant jurisdiction by virtue of directions or orders issued under sub-section 1 or sub-section (2) of section 120 or any other provisions of this Act……………."</para>
+				<para>
+					<b>11.</b> Section 148 mandates issue of notice before assessment, reassessment or computation u/s 147. As per section 148, it is mandatory that the Assessing Officer shall serve on the assessee a notice required him to furnish a return. The expression "Assessing Officer" used in the section 148 means 'the Assessing Officer vested with the jurisdiction over the assessee as stipulated in the definition u/s 2(7A) by virtue of the directions / orders passed u/s 120, sub-section (1) &amp; (2)'. Thus, the notice u/s 148 is required to be issued by the Assessing Officer who is vested with the jurisdiction over the assessee on the basis of the criteria of territorial area, a person or classes of persons, income or classes of incomes and cases or classes of cases as enumerated in sub-section 3 of section 120 of Income Tax Act. It is not the case of the Revenue that the Assessing Officer who has issued the notice u/s 148 was vested with the jurisdiction by virtue of any direction or orders issued under sub-section (1) or (2) of section 120 of the Income Tax Act. Thus, there is no dispute about the jurisdiction vested with the Assessing Officer - ITO, Ward-9(2)-1 over the assessee when the notice u/s 148 was issued by the ITO, Ward-10(3)-4. When it is apparent that the notice u/s 148 was issued by the AO who was not vested with the jurisdiction over the assessee then, the same is patently illegal and void. Consequently, the reassessment proceedings and order in pursuant to the illegal notice u/s 148 are also <i>void ab initio </i>and liable to be set aside. Hence, we hold that the reassessment on the basis of an illegal notice u/s 148 is not sustainable and accordingly the same is set aside.</para>
+				<para>
+					<b>12. </b>Since, we hold the reassessment as invalid and set aside, then, we do not propose to go into the merits of the issue raised in the Revenue's appeal being infectious.</para>
+				<para>
+					<b>13. </b>In the result, the assessee's appeal is allowed and Revenue's appeal is dismissed. </para>
+				<para class="right">■■</para>
+			</order>
+		</caseOrder>
+	</body>
+	<footnote>
+		<dbs_infavourof id="111140000000000002">
+			<link type="foot" display="normal" id="fn1" href="#rfn1">*       </link>In favour of assessee</dbs_infavourof>
+	</footnote>
+</document>
