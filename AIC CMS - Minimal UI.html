@@ -6,7 +6,7 @@
 <title>AIC CMS — All India Cases Editorial & AI Processing System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --pri: #1e3a8a;
@@ -78,7 +78,7 @@ html, body { height: 100%; margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--tx);
-  font: 13.5px/1.5 'Roboto Serif', Georgia, serif;
+  font: 13.5px/1.55 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: "lnum" 1, "tnum" 1;
   -webkit-font-smoothing: antialiased;
@@ -86,7 +86,7 @@ body {
 
 .app {
   display: grid;
-  grid-template-columns: 230px 1fr;
+  grid-template-columns: 230px minmax(0, 1fr);
   height: 100vh;
   overflow: hidden;
 }
@@ -221,6 +221,50 @@ nav a svg { width: 17px; height: 17px; flex-shrink: 0; }
   padding: 10px 8px 0;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
+.side-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 6px;
+}
+.profile-menu { position: relative; }
+.profile-menu summary {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--bd);
+  border-radius: 7px;
+  background: var(--card);
+  color: var(--tx-sec);
+  cursor: pointer;
+  list-style: none;
+}
+.profile-menu summary::-webkit-details-marker { display: none; }
+.profile-menu summary:hover { background: var(--hov); color: var(--tx); }
+.profile-menu summary svg { width: 18px; height: 18px; }
+.profile-dropdown {
+  position: fixed;
+  left: 14px;
+  bottom: 58px;
+  z-index: 200;
+  width: 210px;
+  padding: 10px;
+  border: 1px solid var(--bd);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(15,23,42,0.22);
+}
+.profile-dropdown select { width: 100%; min-width: 0; }
+.nav-reopen-toggle {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 30;
+  background: var(--card);
+  display: none;
+}
+.app.nav-hidden .nav-reopen-toggle { display: grid; }
 .engine-badge {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.08);
@@ -319,75 +363,114 @@ main {
   padding: 20px 24px;
 }
 .page-wrap.workspace-page {
-  display: block;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 8px 8px;
+  overflow: hidden;
 }
 .page-wrap.workspace-page .ws-container {
-  min-height: calc(100vh - 54px);
+  flex: 1;
+  min-height: 0;
   height: auto;
   padding-top: 0;
-  overflow: visible;
+  overflow: hidden;
 }
+.page-wrap.workspace-page .ws-topbar {
+  gap: 8px;
+  padding: 5px 14px;
+  box-shadow: 0 1px 2px rgba(15,23,42,.06);
+}
+.page-wrap.workspace-page .ws-topbar .btn { padding: 4px 10px; font-size: 12px; }
+.page-wrap.workspace-page .ws-case-title { font-size: 13px; line-height: 1.25; }
+.page-wrap.workspace-page .ws-case-meta { margin-top: 0; }
 .page-wrap.workspace-page .split-body {
-  flex: 0 0 auto;
-  height: calc(100vh - 54px);
-  min-height: 360px;
-  overflow: visible;
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 .page-wrap.workspace-page .left-pane {
   height: 100%;
   min-height: 0;
-  overflow: visible;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 .page-wrap.workspace-page .step-content {
   display: flex;
   flex: 1;
   flex-direction: column;
   min-height: 0;
-  overflow: visible;
+  padding: 0;
+  overflow: hidden;
+}
+.page-wrap.workspace-page .step-content:not(.editor-step-content) {
+  padding: 0;
+  overflow-y: auto;
+}
+.page-wrap.workspace-page .step-content:not(.editor-step-content) > .card {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+  min-height: 0;
+  margin: 0;
+  padding: 8px 16px !important;
+  border-radius: 0;
+  box-shadow: none;
+  overflow-y: auto;
 }
 .page-wrap.workspace-page .editor-step-content {
   display: flex;
   flex: 1;
   flex-direction: column;
   min-height: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 .page-wrap.workspace-page .taxmann-editor-container {
   display: flex;
   flex: 1;
+  flex-direction: column;
   min-height: 0;
+  margin: 0;
+  border-radius: 0;
+}
+.page-wrap.workspace-page .taxmann-toolbar,
+.page-wrap.workspace-page .taxmann-editor-box,
+.page-wrap.workspace-page .taxmann-editor-footer {
+  border-radius: 0;
 }
 .page-wrap.workspace-page .steps-nav {
   position: sticky;
   top: 0;
   z-index: 21;
-}
-.page-wrap.workspace-page .taxmann-toolbar {
-  position: sticky;
-  top: 44px;
-  z-index: 20;
-}
-.page-wrap.workspace-page .taxmann-editor-footer {
-  position: sticky;
-  bottom: 0;
-  z-index: 22;
-  box-shadow: 0 -2px 5px rgba(15,23,42,0.08);
+  background: #f8fafc;
 }
 .page-wrap.workspace-page .right-pane {
-  position: sticky;
-  top: 0;
-  align-self: flex-start;
-  height: calc(100vh - 54px);
+  position: static;
+  align-self: stretch;
+  height: auto;
 }
 .page-wrap.workspace-page .taxmann-editor-box {
   flex: 1;
   height: auto;
   max-height: none;
   min-height: 0;
+  margin: 0;
+  overflow-y: auto;
 }
 .page-wrap.workspace-page .taxmann-editor-content {
-  min-height: 100%;
+  padding: 8px 16px;
+}
+.page-wrap.workspace-page .taxmann-editor-footer {
+  flex: 0 0 auto;
+  padding: 4px 12px !important;
+  font-size: 11px !important;
+  line-height: 1.3;
 }
 
 /* Common UI */
@@ -404,12 +487,18 @@ h2.sec-heading {
   color: var(--tx);
 }
 .kpis {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
   gap: 12px;
   margin-bottom: 18px;
+  min-width: max-content;
+  width: max-content;
+  overflow-x: auto;
 }
 .kpi-card {
+  flex: 0 0 180px;
   padding: 12px 14px;
 }
 .kpi-top {
@@ -671,15 +760,16 @@ tr.clickable:hover td { background: var(--hov); }
 .ws-topbar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 18px;
+  gap: 8px;
+  padding: 5px 14px;
   background: var(--card);
   border-bottom: 1px solid var(--bd);
   flex-shrink: 0;
 }
-.ws-case-info { display: flex; flex-direction: column; }
-.ws-case-title { font-size: 14px; font-weight: 700; }
-.ws-case-meta { font-size: 11px; color: var(--mu); display: flex; gap: 6px; margin-top: 2px; }
+.ws-topbar .btn { padding: 4px 10px; font-size: 12px; min-height: 28px; }
+.ws-case-info { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+.ws-case-title { font-size: 12.5px; font-weight: 700; line-height: 1.25; }
+.ws-case-meta { font-size: 10.5px; color: var(--mu); display: flex; align-items: center; gap: 5px; margin-top: 0; line-height: 1.2; }
 .ws-stage-pills {
   display: flex;
   flex-wrap: nowrap;
@@ -758,6 +848,8 @@ tr.clickable:hover td { background: var(--hov); }
   min-height: 0;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
   background: #334155;
   border-left: 1px solid var(--bd);
   flex-shrink: 0;
@@ -772,10 +864,10 @@ tr.clickable:hover td { background: var(--hov); }
 }
 .step-tab {
   flex: 1;
-  padding: 9px 12px;
+  padding: 6px 10px;
   border: 0;
   background: transparent;
-  border-bottom: 2.5px solid transparent;
+  border-bottom: 3px solid transparent;
   color: var(--mu);
   font-weight: 600;
   font-size: 12px;
@@ -785,9 +877,11 @@ tr.clickable:hover td { background: var(--hov); }
   justify-content: center;
   gap: 5px;
 }
-.step-tab.on {
-  color: var(--pri);
-  border-bottom-color: var(--accent);
+.step-tab.on, .step-tab.completed.on {
+  color: #fff;
+  background: var(--accent);
+  border-bottom-color: var(--pri);
+  font-weight: 700;
 }
 .step-tab.completed { color: var(--ok-text); }
 .step-content {
@@ -921,6 +1015,26 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
 .counsel-add-row input, .counsel-add-row select { border: 0; box-shadow: none; }
 .counsel-add-row input:focus, .counsel-add-row select:focus { outline: 2px solid var(--bd-focus); outline-offset: -2px; }
 .counsel-add-row .btn { margin-left: 6px; }
+.citation-add-row {
+  grid-template-columns: 72px 82px 116px 100px 105px 88px auto;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  min-width: 735px;
+}
+.citation-add-row input,
+.citation-add-row select { min-width: 0; }
+.citation-add-row select { width: 100%; height: 32px; padding: 0 8px; }
+.citation-add-row .btn {
+  align-self: center;
+  justify-self: end;
+  width: 54px;
+  height: 30px;
+  margin-left: 0;
+  padding: 0 10px;
+  font-size: 11px;
+}
+.citation-management .citation-add-row { overflow-x: auto; }
+.appeal-add-row { grid-template-columns: 50% 20% 15%; }
 @media (max-width: 600px) {
   .judge-add-row { grid-template-columns: 1fr; }
   .judge-add-row .btn { margin: 5px 0 0; justify-self: start; }
@@ -942,7 +1056,7 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
 .sld-option-row .sld-toggle-row { margin: 0; }
 .sld-date-panel { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin: 0 0 14px; }
 .sld-date-panel .form-group { min-width: 220px; margin: 0; }
-.sld-image-row { display: flex; align-items: center; gap: 14px; }
+.sld-image-row { display: flex; align-items: center; gap: 4px; }
 .sld-image-controls { flex: 1 1 260px; min-width: 0; }
 .sld-image-controls input[type="file"] { display: block; max-width: 100%; }
 .sld-image-preview { display: grid; flex: 0 0 190px; min-height: 120px; place-items: center; overflow: hidden; border: 1px dashed var(--bd); border-radius: var(--radius); background: var(--bg); color: var(--mu); font-size: 12px; }
@@ -1092,10 +1206,9 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
   overflow-y: auto;
   box-shadow: 0 0 0 1px rgba(37,99,235,0.1);
 }
-.taxmann-editor-footer { flex: 0 0 auto; }
 .taxmann-editor-content {
-  padding: 24px 28px;
-  min-height: 520px;
+  padding: 12px 20px;
+  min-height: 0;
   outline: none;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
@@ -1106,9 +1219,8 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
   word-break: break-word;
 }
 .taxmann-link { color: #0056b3; text-decoration: underline; font-weight: 700; cursor: pointer; }
-.taxmann-headline { font-weight: 700; font-size: 14px; line-height: 1.55; margin-bottom: 18px; color: #000000; }
-.taxmann-sep { text-align: center; color: #d1d5db; font-size: 14px; letter-spacing: 4px; margin: 18px 0; user-select: none; }
-.taxmann-header-block { text-align: center; font-size: 13.5px; line-height: 1.55; margin-bottom: 22px; color: #000000; }
+.taxmann-headline { font-weight: 700; font-size: 14px; line-height: 1.5; margin-bottom: 6px; color: #000000; }
+.taxmann-header-block { text-align: center; font-size: 13.5px; line-height: 1.5; margin-bottom: 6px; color: #000000; }
 .taxmann-header-block .cit { font-weight: 700; margin-bottom: 4px; }
 .taxmann-header-block .court { font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
 .taxmann-header-block .party1 { font-weight: 700; }
@@ -1118,16 +1230,17 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
 .taxmann-header-block .caseno { font-size: 13px; text-transform: uppercase; }
 .taxmann-header-block .ay { font-size: 13px; }
 .taxmann-header-block .date { font-size: 13px; text-transform: uppercase; margin-top: 2px; }
-.taxmann-section-p { font-size: 13.5px; line-height: 1.6; margin-bottom: 14px; color: #000000; text-align: justify; }
-.taxmann-document-section { margin: 22px 0; }
-.taxmann-document-section h2 { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 14px; margin: 0 0 9px; padding-bottom: 4px; border-bottom: 1px solid #d1d5db; text-align: left; }
+.taxmann-section-p { font-size: 13.5px; line-height: 1.5; margin-bottom: 8px; color: #000000; text-align: justify; }
+.taxmann-document-section { margin: 0 0 10px; }
+.taxmann-document-section + .taxmann-document-section { padding-top: 10px; border-top: 1px solid #eef0f3; }
+.taxmann-document-section h2 { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 14px; margin: 0 0 6px; padding-bottom: 3px; border-bottom: 1px solid #d1d5db; text-align: left; }
 .editor-component-edit { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 24px; height: 24px; padding: 0; border: 1px solid #d1d5db; border-radius: 5px; background: #fff; color: #374151; cursor: pointer; }
 .editor-component-edit:hover, .editor-component-edit[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 .editor-component-edit .ui-icon { width: 13px; height: 13px; }
 .taxmann-document-section .component-editing { outline: 1px dashed var(--accent); outline-offset: 3px; border-radius: 2px; }
-.taxmann-document-section p { margin: 0 0 10px; }
+.taxmann-document-section p { margin: 0 0 6px; }
 .taxmann-document-list { margin: 0; padding-left: 22px; }
-.taxmann-document-list li { margin: 0 0 9px; padding-left: 3px; }
+.taxmann-document-list li { margin: 0 0 5px; padding-left: 3px; }
 
 pre.xml-code {
   background: #0f172a;
@@ -1144,12 +1257,32 @@ pre.xml-code {
 .pdf-tools { display: flex; gap: 6px; }
 .pdf-tool-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; border-radius: 4px; padding: 3px 7px; font-size: 11px; cursor: pointer; }
 .pdf-tool-btn.accent { background: var(--accent); }
-.pdf-frame-wrap { flex: 1; position: relative; }
-.pdf-frame-wrap iframe { width: 100%; height: 100%; border: none; }
+.pdf-frame-wrap { flex: 1; min-width: 0; min-height: 0; position: relative; overflow: hidden; }
+.pdf-frame-wrap iframe { display: block; width: 100%; height: 100%; border: none; }
 
 .modal-ov { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); display: grid; place-items: center; z-index: 100; }
 .modal-box { background: var(--card); border-radius: var(--radius-lg); padding: 20px; width: 440px; max-width: 90%; }
 .case-preview-modal { width: min(960px, 94vw); max-width: 94vw; max-height: 92vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.component-editor-modal { width: min(1040px, 94vw); max-width: 94vw; max-height: 92vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.component-editor-overlay { inset: auto; background: rgba(15, 23, 42, 0.32); }
+.component-editor-overlay .component-editor-modal { width: calc(100% - 56px); max-width: 860px; height: auto; max-height: calc(100% - 72px); border-radius: 10px; box-shadow: 0 18px 48px rgba(15,23,42,.35); }
+.component-editor-overlay .component-editor-content { max-height: 52vh; overflow-y: auto; }
+.component-editor-body { display: flex; flex: 1; flex-direction: column; min-height: 0; overflow: hidden; }
+.component-editor-body .taxmann-toolbar { border-radius: 0; }
+.component-editor-content { min-height: 220px; outline: none; }
+.component-editor-content:focus { box-shadow: inset 0 0 0 1px var(--accent); }
+.xml-editor-text { flex: 1; width: 100%; min-height: 300px; max-height: 60vh; padding: 12px 14px; border: 0; outline: none; resize: none; background: #0f172a; color: #e2e8f0; font: 12px/1.55 'JetBrains Mono', Consolas, monospace; white-space: pre; overflow: auto; }
+.xml-workspace { display: flex; flex: 1; flex-direction: column; min-height: 0; background: #fff; }
+.xml-workspace-header { display: flex; align-items: center; gap: 12px; padding: 4px 12px; border-bottom: 1px solid #cbd5e1; background: #fff; }
+.xml-workspace-header h2 { margin: 0; font: 700 18px/1.2 Georgia, 'Times New Roman', serif; color: #111827; }
+.xml-workspace-tools { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-bottom: 1px solid #cbd5e1; background: #f8fafc; }
+.xml-workspace-tools .btn { min-width: 34px; padding: 5px 8px; }
+.xml-workspace-tools label { display: inline-flex; align-items: center; gap: 5px; margin-left: 4px; font-size: 12px; color: #111827; }
+.xml-code-wrap { display: flex; flex: 1; min-height: 0; overflow: hidden; background: #fff; }
+.xml-line-numbers { flex: 0 0 42px; padding: 4px 8px 4px 0; overflow: hidden; border-right: 1px solid #e2e8f0; background: #f8fafc; color: #475569; font: 12px/1.55 'JetBrains Mono', Consolas, monospace; text-align: right; user-select: none; }
+.xml-code-editor { flex: 1; min-width: 0; min-height: 0; padding: 4px 12px; border: 0; outline: none; resize: none; overflow: auto; background: #fff; color: #111827; font: 12px/1.55 'JetBrains Mono', Consolas, monospace; white-space: pre; }
+.xml-code-editor.wrap { white-space: pre-wrap; overflow-wrap: anywhere; }
+.component-editor-overlay .xml-workspace-modal { width: calc(100% - 16px); max-width: none; height: calc(100% - 16px); max-height: none; border-radius: 0; }
 .case-preview-header { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--bd); }
 .case-preview-content { overflow: auto; padding: 24px 32px; background: #fff; color: #000; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.55; text-align: justify; }
 .case-preview-content .taxmann-document-section { margin: 0; }
@@ -1315,7 +1448,12 @@ h2.sec-heading { font-size: 15px; letter-spacing: -0.2px; }
 .breakdowns-grid { gap: 14px; margin-bottom: 18px; }
 .breakdown-card { padding: 15px 16px; }
 .table-card { box-shadow: var(--shadow-sm); }
-.table-header { padding: 12px 15px; flex-wrap: wrap; }
+.table-header { padding: 10px 12px; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; }
+.table-header > div:first-child { flex-wrap: nowrap !important; gap: 6px !important; min-width: 0; }
+.table-header > div { flex-shrink: 0; }
+.table-header select, .table-header input[type="text"] { min-height: 30px; padding-top: 3px; padding-bottom: 3px; font-size: 12px; max-width: 150px; }
+.table-header .search-field input { width: 190px !important; max-width: none; }
+.table-header label { display: inline-flex; align-items: center; gap: 4px; }
 .table-wrap { scrollbar-color: var(--bd) transparent; }
 th { padding: 10px 12px; font-size: 10px; letter-spacing: 0.45px; }
 td { padding: 11px 12px; }
@@ -1328,11 +1466,11 @@ input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus
   border-color: var(--bd-focus);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--bd-focus) 18%, transparent);
 }
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible, [contenteditable="true"]:focus-visible {
   outline: 2px solid var(--bd-focus);
   outline-offset: 2px;
 }
-.step-tab { min-height: 44px; }
+.step-tab { min-height: 34px; }
 .step-tab:disabled { cursor: not-allowed; opacity: 0.55; }
 .upload-container { max-width: 900px; gap: 18px; }
 .upload-container > .card { padding: 20px !important; }
@@ -1409,7 +1547,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .app { grid-template-columns: 196px minmax(0, 1fr); }
   .page-wrap { padding: 18px; }
   .top { padding-inline: 18px; }
-  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .stage-kpis { grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)) !important; }
 }
 
@@ -1432,13 +1570,37 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .brand { flex: 0 0 auto; padding: 0 12px 0 0; margin: 0 4px 0 0; border: 0; border-right: 1px solid var(--bd); }
   .brand-logo { width: 30px; height: 30px; }
   .brand-text b { font-size: 13px; }
-  .brand-text span, .nav-label, .nav-bottom { display: none; }
+  .brand-text span, .nav-label { display: none; }
+  .nav-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    background: var(--side);
+    border-top: 1px solid var(--bd);
+  }
+  .side-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 6px;
+    width: 100%;
+    margin: 0;
+  }
+  .side-actions .icon-btn { flex: 0 0 auto; }
+  .profile-dropdown {
+    position: fixed;
+    left: auto;
+    right: 10px;
+    bottom: 58px;
+  }
+  .nav-bottom .engine-badge { display: none; }
   nav a { flex: 0 0 auto; padding: 7px 9px; font-size: 12px; white-space: nowrap; }
-  main { height: auto; min-height: calc(100vh - 54px); overflow: visible; }
-  .top { position: sticky; top: 54px; z-index: 15; flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
-  .top-title h1 { font-size: 16px; }
-  .top .sp { flex-basis: 0; }
-  .top-actions { gap: 5px; }
+  main { height: auto; min-height: calc(100vh - 54px); overflow: visible; padding-bottom: 54px; }
   .filter-pill { padding: 4px 7px; }
   .filter-pill select { max-width: 130px; font-size: 11px; }
   .page-wrap { overflow: visible; padding: 14px; }
@@ -1469,6 +1631,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .page-wrap.workspace-page .steps-nav { top: 0; }
   .page-wrap.workspace-page .taxmann-toolbar { top: 44px; }
   .page-wrap.workspace-page .right-pane { position: static; flex: 0 0 62vh; height: 62vh; }
+  .page-wrap.workspace-page .split-body.pdf-open {
+    flex-direction: row;
+    height: calc(100dvh - 180px);
+    min-height: 300px;
+    overflow: hidden;
+  }
+  .page-wrap.workspace-page .split-body.pdf-open .left-pane {
+    flex: 0 0 58% !important;
+    width: 58% !important;
+    height: 100%;
+    overflow: hidden;
+  }
+  .page-wrap.workspace-page .split-body.pdf-open .right-pane {
+    position: relative;
+    flex: 1 1 42%;
+    width: 42% !important;
+    height: 100%;
+    min-height: 0;
+  }
   .page-wrap.workspace-page .taxmann-editor-box {
     height: 52vh;
     max-height: calc(100dvh - 280px);
@@ -1496,9 +1677,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 @media (max-width: 480px) {
   .top { align-items: flex-start; }
-  .top-actions { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
-  .top-actions .av { margin-left: auto; }
-  .kpis { grid-template-columns: 1fr 1fr; }
+  .kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .kpi-label { font-size: 9.5px; }
   .kpi-sub { font-size: 10px; }
   .stage-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
@@ -1521,9 +1700,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
         <b>AIC CMS</b>
         <span>All India Cases</span>
       </div>
+      <button id="nav-toggle" class="nav-toggle" onclick="toggleNavigation()" aria-label="Hide navigation menu" title="Hide navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18m7-6-3-3 3-3"></path></svg>
+      </button>
     </div>
     
-    <div class="nav-label">Core Modules</div>
     <a id="nav-dash" onclick="navigate('dash')" class="on">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"></rect><rect x="13" y="3" width="8" height="5" rx="1"></rect><rect x="13" y="10" width="8" height="11" rx="1"></rect><rect x="3" y="13" width="8" height="8" rx="1"></rect></svg>
       <span>Dashboard</span>
@@ -1540,6 +1721,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     <a id="nav-upload" onclick="navigate('upload')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 13v8m-8-6.1A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"></path><path d="m8 17 4-4 4 4"></path></svg>
       <span>Manual Upload</span>
+    </a>
+    <a id="nav-tickets" onclick="navigate('tickets')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v14H4z"></path><path d="M8 9h8M8 13h5"></path></svg>
+      <span>Tickets</span>
+    </a>
+    <a id="nav-employee-report" onclick="navigate('employee-report')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 17h16"></path><path d="m7 14 3-4 3 2 4-6"></path></svg>
+      <span>Employee Report</span>
     </a>
     <a id="nav-masters" class="masters-toggle" aria-expanded="false" onclick="toggleMastersMenu()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"></ellipse><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5"></path><path d="M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"></path></svg>
@@ -1560,59 +1749,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     </div>
 
     <div class="nav-bottom">
-      <div class="engine-badge">
-        AI Pipeline <b>v2.4 Active</b><br>
-        Auto-Marking & Ingestion
+      <div class="side-actions">
+        <button class="icon-btn" title="System Notifications" aria-label="System Notifications" onclick="toast('System: All 10 AI ingestion pipelines operating nominally.')"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0m-10.47-5.674A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></button>
+        <button class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Dark/Light Mode" onclick="toggleTheme()"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></button>
+        <details class="profile-menu">
+          <summary aria-label="Change active profile" title="Change active profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></summary>
+          <div class="profile-dropdown">
+            <select id="profile-select" aria-label="Active profile" onchange="switchProfile(this.value)">
+              <option value="Bharat Sharma (Chief Editor)">Bharat Sharma (Chief Editor)</option>
+              <option value="Bunty - XML Conversion">Bunty - XML Conversion</option>
+              <option value="Bunty - QC Team">Bunty - QC Team</option>
+              <option value="AI Failed - Worker">AI Failed - Worker</option>
+              <option value="AI Flagged - worker">AI Flagged - worker</option>
+            </select>
+          </div>
+        </details>
       </div>
     </div>
   </nav>
   <!-- Main View -->
   <main>
-    <div class="top">
-      <div class="top-title">
-        <h1 id="page-title">Dashboard</h1>
-        <button id="nav-toggle" class="nav-toggle" onclick="toggleNavigation()" aria-label="Hide navigation menu" title="Hide navigation menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18m7-6-3-3 3-3"></path></svg>
-        </button>
-      </div>
-      <div class="sp"></div>
-      
-      <div class="top-actions">
-        <!-- Source Filter beside Time Filter -->
-        <div id="top-source-filter" class="filter-pill">
-          <span class="filter-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18L12 3 3 7Zm2 0v11m5-11v11m4-11v11m5-11v11M3 22h18M2 18h20v4H2z"/></svg></span>
-          <select id="source-select" onchange="state.sourceFilter=this.value;render()">
-            <option value="">All Sources</option>
-            <option value="Supreme Court">Supreme Court</option>
-            <option value="Delhi High Court">Delhi HC</option>
-            <option value="Bombay High Court">Bombay HC</option>
-          </select>
-        </div>
-
-        <!-- Time Filter -->
-        <div id="top-date-filter" class="filter-pill">
-          <span class="filter-icon"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01M16 17h.01"/></svg></span>
-          <select id="date-select" onchange="toast('Date filter updated: '+this.value)">
-            <option>Last 7 days</option>
-            <option>Today</option>
-            <option>Yesterday</option>
-            <option>This Month (Oct 2026)</option>
-            <option>Last 30 days</option>
-          </select>
-        </div>
-
-        <button class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme" onclick="toggleTheme()"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></button>
-        <button class="icon-btn" title="System Notifications" aria-label="System Notifications" onclick="toast('System: All 10 AI ingestion pipelines operating nominally.')"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0m-10.47-5.674A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></button>
-        <select id="profile-select" aria-label="Active profile" onchange="switchProfile(this.value)">
-          <option value="Bharat Sharma (Chief Editor)">Bharat Sharma (Chief Editor)</option>
-          <option value="Bunty - XML Conversion">Bunty - XML Conversion</option>
-          <option value="Bunty - QC Team">Bunty - QC Team</option>
-          <option value="AI Failed - Worker">AI Failed - Worker</option>
-          <option value="AI Flagged - worker">AI Flagged - worker</option>
-        </select>
-      </div>
-    </div>
-
+    <button id="nav-reopen-toggle" class="nav-toggle nav-reopen-toggle" onclick="toggleNavigation()" aria-label="Show navigation menu" title="Show navigation menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18m7-6-3-3 3-3"></path></svg>
+    </button>
     <div id="main-content" class="page-wrap"></div>
   </main>
 </div>
@@ -1641,6 +1800,7 @@ const ICONS = {
   eye: '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>',
   html: '<path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
   lock: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  trash: '<path d="M3 6h18m-2 0v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6m3 0V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m-6 5v6m4-6v6"/>',
   check: '<path d="m20 6-11 11-5-5"/>',
   loader: '<path d="M21 12a9 9 0 1 1-6.219-8.56"/>'
 };
@@ -1670,19 +1830,20 @@ const state = {
   view: 'dash',
   mastersOpen: false,
   masterScreen: '',
+  masterSearch: '',
+  masterEditingIndex: null,
   activeProfile: 'Bharat Sharma (Chief Editor)',
   pipeType: 'ALL',
   activeStage: 2,
-  dashboardQc1Tab: 'failed',
-  dashboardPage: 0,
-  dashboardPageSize: 15,
   scope: 'my',
   sourceFilter: '',
+  dashboardTimeFilter: 'all',
+  dashboardStartDate: '',
   searchQuery: '',
   statusFilter: '',
   explorerStageFilter: '',
-  treatFilter: '',
-  sortOrder: 'random',
+  assignedFilter: '',
+  sortOrder: 'new',
   explorerStatusOrder: null,
   detailsCaseIndex: null,
   detailsTab: 'History',
@@ -1698,6 +1859,7 @@ const state = {
   workspaceViewOnly: false,
   editorSourceMode: false,
   editorHtmlSnapshot: '',
+  editorComponentIndex: null,
   workspaceUpdateMode: false,
   metadataSuggestions: { judge: [], counsel: [] },
   categorySearch: '',
@@ -1725,7 +1887,12 @@ const state = {
     manualCheck: false
   },
   uploadSuccessGuid: '',
-  uploadSuccessManualCheck: false
+  uploadSuccessManualCheck: false,
+  tickets: [
+    { id: 'AIC-TKT-1001', date: '27 Oct 2026', documentId: 'AIC-DOC-2026-0842', documentType: 'Judgment', status: 'Open', priority: 'High', assignedTo: 'Anita Verma', raisedBy: 'Rahul Mehta' },
+    { id: 'AIC-TKT-1002', date: '26 Oct 2026', documentId: 'AIC-DOC-2026-0817', documentType: 'Headnote', status: 'In Progress', priority: 'Medium', assignedTo: 'Vikram Singh', raisedBy: 'Priya Nair' },
+    { id: 'AIC-TKT-1003', date: '25 Oct 2026', documentId: 'AIC-DOC-2026-0794', documentType: 'Metadata', status: 'Resolved', priority: 'Low', assignedTo: 'Anita Verma', raisedBy: 'Sanjay Rao' }
+  ]
 };
 
 function getCategorySelections(c) {
@@ -1925,9 +2092,26 @@ const PIPE_DATA = {};
     SNC: Math.round(sel * 0.30)
   };
   sh.DIGEST = sel - sh.URO - sh.SNC;
+  const selectionTotals = {
+    URO: Math.round(sy.c * 0.45),
+    SNC: Math.round(sy.c * 0.30)
+  };
+  selectionTotals.DIGEST = sy.c - selectionTotals.URO - selectionTotals.SNC;
+  const genSelection = (tot, selected, i) => {
+    const failed = Math.round(tot * (0.012 + (i % 3) * 0.007));
+    const inProcess = Math.round(tot * (0.05 + (i % 4) * 0.015));
+    return {
+      tot,
+      c: selected,
+      selected,
+      rejected: tot - selected - failed - inProcess,
+      p: inProcess,
+      f: failed
+    };
+  };
 
   ['URO', 'SNC', 'DIGEST'].forEach(t => {
-    const arr = [dl, sy, gen(sh[t], 2)];
+    const arr = [dl, sy, genSelection(selectionTotals[t], sh[t], 2)];
     for (let i = 3; i < STAGES.length; i++) {
       if (i === 5 && t === 'URO') {
         arr[i] = { tot: 0, c: 0, p: 0, f: 0 };
@@ -1947,6 +2131,10 @@ const PIPE_DATA = {};
       sum.c += PIPE_DATA[t][i].c;
       sum.p += PIPE_DATA[t][i].p;
       sum.f += PIPE_DATA[t][i].f;
+      if (i === 2) {
+        sum.selected = (sum.selected || 0) + PIPE_DATA[t][i].selected;
+        sum.rejected = (sum.rejected || 0) + PIPE_DATA[t][i].rejected;
+      }
     });
     return sum;
   });
@@ -2514,13 +2702,18 @@ function nextCaseAutoId() {
   return String(highestId + 1n);
 }
 CASES.forEach(c => {
+  c.isTopStory = true;
   if (((c.stage === 7 && c.st === 'c') || (c.stage === 8 && c.st === 'f') || (c.stage === 9 && (c.st === 'f' || c.st === 'mr' || c.st === 'c')) || c.stage === 10) && !c.caseAutoId) c.caseAutoId = nextCaseAutoId();
   if (c.caseAutoId) {
     if (!c.sldMarking) c.sldMarking = 'None';
-    if (typeof c.isTopStory !== 'boolean') c.isTopStory = false;
     if (typeof c.isUpdated !== 'boolean') c.isUpdated = false;
     if (typeof c.sldHeading !== 'string') c.sldHeading = '';
   }
+});
+CASES.filter(c => c.qcStatus === 'QC2 Done' && c.deleted !== true).slice(0, 3).forEach(c => {
+  c.deleted = true;
+  c.deletedFromQcStatus = c.qcStatus;
+  c.deletedAt = 'Today';
 });
 
 const QC_DASHBOARD_STAGES = ['Auto-Processing(AI)', 'Procedure', 'Digest', 'QC1'];
@@ -2537,41 +2730,21 @@ const STAGE_BIFURCATIONS = {
   0: [
     { title: 'Download Source Analytics', items: [['High Court Portals', 0.52], ['Supreme Court Scraping', 0.30], ['Tribunal APIs', 0.18]] }
   ],
-  1: [
-    { title: 'Server Sync Status', items: [['Synced to S3 Storage', 0.88], ['Checksum Verified', 0.94], ['Pending Compression', 0.06]] }
-  ],
   2: [
-    { title: 'Selected (Treatment Type)', items: [['URO (Un-reported Order)', 0.45], ['SNC (Short Note Case)', 0.30], ['Digest (Full Digest & Headnote)', 0.25]] },
+    { title: 'Selected (Treatment Type)', items: [['URO', 0.45], ['SNC', 0.30], ['Digest', 0.25]] },
     { title: 'Selected (Category)', items: [['Direct Tax → Income Tax', 0.48], ['GST & Indirect Tax', 0.32], ['Crime & Corporate Fraud', 0.20]] },
-    { title: 'Selection Marking', items: [['BNF (Benchmark Non-Fatal)', 0.35], ['BNS (Benchmark Substantial)', 0.30], ['SBNS (Special Benchmark)', 0.20], ['BN (Benchmark Normal)', 0.15]] }
-  ],
-  3: [
-    { title: 'J.XML Quality Checks', items: [['Passed All Parsing Checks', 0.88], ['Red Flagged (OCR/Structure Error)', 0.12]] }
+    { title: 'Selection Marking', items: [['BNF', 0.35], ['BNS', 0.30], ['SBNS', 0.20], ['BN', 0.15]] }
   ],
   4: [
     { title: 'Meta Data Court / Source Bifurcation', items: [['High Court', 0.54], ['Supreme Court', 0.28], ['Tribunals (ITAT/CESTAT)', 0.14], ['Others', 0.04]] }
   ],
-  5: [
-    { title: 'Digest / SNC AI Quality', items: [['Passed All Legal Consistency Checks', 0.91], ['Red Flagged (Requires Editorial Polish)', 0.09]] }
-  ],
   6: [
     { title: 'XML Binding Status', items: [['Full Schema Conformance', 0.96], ['Namespace Warnings', 0.04]] }
   ],
-  7: [
-    { title: 'Case DB Push Status', items: [['Metadata Stored & CaseAutoID Allocated', 0.94], ['Database Push Exceptions', 0.06]] }
-  ],
-  8: [
-    { title: 'Hyperlinking Resolution', items: [['DB IDs Resolved & Bound', 0.92], ['Unmatched Citation Candidates', 0.08]] }
-  ],
-  9: [
-    { title: 'QC 1 Routing Breakdown', items: [['To Review', 0.055], ['Other QC1 Cases', 0.945]] }
-  ],
-  10: [
-    { title: 'QC 2 Production Push', items: [['Approved to Production', 0.95], ['Returned for Correction', 0.05]] }
-  ]
+  10: []
 };
 
-const num = n => Number(n).toLocaleString('en-IN');
+const num = n => Number.isFinite(Number(n)) ? Number(n).toLocaleString('en-IN') : '0';
 const escapeHtml = value => String(value == null ? '' : value)
   .replace(/&/g, '&amp;')
   .replace(/</g, '&lt;')
@@ -2587,11 +2760,28 @@ const stageName = (idx, type) => {
   return STAGES[idx];
 };
 const aiFlowValue = c => c.stage < 9 || (c.stage === 9 && (c.st === 'f' || c.st === 'p'));
+const dashboardCaseMatches = c => {
+  if (state.sourceFilter && !c.court.toLowerCase().includes(state.sourceFilter.toLowerCase())) return false;
+  if (state.dashboardTimeFilter === 'all') return true;
+  const timestamp = Date.parse(String(c.ts || '').replace(' ', 'T'));
+  if (Number.isNaN(timestamp)) return false;
+  if (state.dashboardTimeFilter === 'custom') {
+    return !state.dashboardStartDate || timestamp >= Date.parse(state.dashboardStartDate + 'T00:00:00');
+  }
+  const windowMs = state.dashboardTimeFilter === '24h' ? 24 * 60 * 60 * 1000 : state.dashboardTimeFilter === '7d' ? 7 * 24 * 60 * 60 * 1000 : 30 * 24 * 60 * 60 * 1000;
+  return timestamp >= Date.now() - windowMs;
+};
+function openDashboardDatePicker() {
+  const picker = document.getElementById('dashboard-date-picker');
+  if (!picker) return;
+  if (typeof picker.showPicker === 'function') picker.showPicker();
+  else picker.focus();
+}
 const dashboardFailedCases = (stage, pipelineType) => CASES.filter(c =>
   c.stage === stage &&
   c.st === 'f' &&
   (pipelineType === 'ALL' || c.tr.toUpperCase() === pipelineType) &&
-  (!state.sourceFilter || c.court.toLowerCase().includes(state.sourceFilter.toLowerCase()))
+  dashboardCaseMatches(c)
 );
 const dashboardToReviewCases = (stage, pipelineType) => CASES.filter(c =>
   stage === 9 &&
@@ -2599,12 +2789,11 @@ const dashboardToReviewCases = (stage, pipelineType) => CASES.filter(c =>
   c.st === 'mr' &&
   !c.deleted &&
   (pipelineType === 'ALL' || c.tr.toUpperCase() === pipelineType) &&
-  (!state.sourceFilter || c.court.toLowerCase().includes(state.sourceFilter.toLowerCase()))
+  dashboardCaseMatches(c)
 );
 const dashboardMainKpis = pipelineType => {
   const totalFailed = STAGES.reduce((total, _, stage) => total + dashboardFailedCases(stage, pipelineType).length, 0);
-  const totalToReview = dashboardToReviewCases(9, pipelineType).length;
-  const reviewQueueTotal = totalFailed + totalToReview;
+  const reviewQueueTotal = totalFailed + dashboardToReviewCases(9, pipelineType).length;
   return [
     { label: 'Downloaded Cases', val: num(PIPE_DATA[pipelineType][0].tot), trend: '+4.8%', cls: 'up', sub: '' },
     { label: 'Selected & Categorized', val: num(PIPE_DATA[pipelineType][2].tot), trend: '+3.2%', cls: 'up', sub: '' },
@@ -2678,6 +2867,15 @@ const isCaseVisibleInExplorer = (c, isMyCases) => {
   const isManualReview = c.manualReview === true || c.st === 'mr' || c.qcStatus === 'Failed';
   return isMyCases ? isManualReview : !isManualReview;
 };
+function openExplorerQueue(scope) {
+  state.scope = scope;
+  state.searchQuery = '';
+  state.statusFilter = '';
+  state.explorerStageFilter = '';
+  state.assignedFilter = '';
+  state.page = 0;
+  navigate('exp');
+}
 function openExplorerCase(idx) {
   const c = CASES[idx];
   if (isQcDashboardCase(c)) {
@@ -2687,19 +2885,17 @@ function openExplorerCase(idx) {
   const workspaceStep = explorerStageLabel(c) === 'SLD' ? 3 : 2;
   openCase(idx, 'exp', workspaceStep);
 }
-function openDashboardFailedCase(guid) {
-  const c = CASES.find(item => item.guid === guid);
-  if (!c || (c.st !== 'f' && !(c.stage === 9 && c.st === 'mr'))) {
-    toast('Dashboard case could not be found.', 'error');
-    return;
-  }
-  openCase(c.i, 'dash', 2);
-}
-const dashboardFailedCaseAction = c =>
-  '<button class="btn sm p" onclick="event.stopPropagation();openDashboardFailedCase(this.dataset.guid)" data-guid="' + escapeHtml(c.guid) + '">Update</button>';
 function explorerCaseAction(c) {
   const isQcComplete = c.qcStatus === 'QC1 Done' || c.qcStatus === 'QC2 Done';
+  if (state.scope === 'all' && !isQcComplete) {
+    return '<button class="btn sm" disabled title="Updates are disabled in All Cases">Update</button>';
+  }
   return '<button class="btn sm p" onclick="event.stopPropagation();openExplorerCase(' + c.i + ')">' + (isQcComplete ? 'View' : 'Update') + '</button>';
+}
+function caseBenchName(c) {
+  const benchNames = ['Allahabad', 'Agra', 'Andhra Pradesh', 'Ahmedabad', 'Bombay', 'Calcutta', 'Amaravati', 'Chhattisgarh', 'Amritsar'];
+  const index = Number.isInteger(c && c.i) ? c.i : Math.floor(Math.random() * benchNames.length);
+  return benchNames[Math.abs(index) % benchNames.length];
 }
 const isWorkspaceStepUnlocked = (c, step) => {
   return canOpenCaseEditor(c);
@@ -2735,11 +2931,17 @@ function toggleTheme() {
 function toggleNavigation() {
   const app = document.getElementById('app-shell');
   const toggle = document.getElementById('nav-toggle');
-  if (!app || !toggle) return;
+  const reopenToggle = document.getElementById('nav-reopen-toggle');
+  if (!app || !toggle || !reopenToggle) return;
   const hidden = app.classList.toggle('nav-hidden');
   toggle.setAttribute('aria-label', hidden ? 'Show navigation menu' : 'Hide navigation menu');
   toggle.title = hidden ? 'Show navigation menu' : 'Hide navigation menu';
   toggle.innerHTML = uiIcon(hidden ? 'panelOpen' : 'panelClose', 18);
+  reopenToggle.setAttribute('aria-label', hidden ? 'Show navigation menu' : 'Hide navigation menu');
+  reopenToggle.title = hidden ? 'Show navigation menu' : 'Hide navigation menu';
+  reopenToggle.innerHTML = uiIcon(hidden ? 'panelOpen' : 'panelClose', 18);
+  syncEditorComponentModalBounds();
+  requestAnimationFrame(syncEditorComponentModalBounds);
 }
 
 function toggleMastersMenu() {
@@ -2752,9 +2954,22 @@ function toggleMastersMenu() {
 
 function navigateMaster(masterName) {
   state.masterScreen = masterName;
+  state.masterSearch = '';
+  state.masterEditingIndex = null;
   state.mastersOpen = true;
   state.view = 'master';
   state.page = 0;
+  render();
+}
+
+function saveMasterEdit() {
+  const input = document.querySelector('[data-master-name="' + state.masterEditingIndex + '"]');
+  if (!input || !input.value.trim()) {
+    toast('Enter a master name.');
+    return;
+  }
+  state.masterEditingIndex = null;
+  toast('Master entry updated.');
   render();
 }
 
@@ -2782,6 +2997,8 @@ function navigate(viewName) {
 
 function switchProfile(profile) {
   state.activeProfile = profile;
+  const profileMenu = document.querySelector('.profile-menu');
+  if (profileMenu) profileMenu.open = false;
   if (profile !== 'Bharat Sharma (Chief Editor)') {
     state.scope = 'my';
     if (state.view === 'dash' || state.view === 'qc') state.view = 'exp';
@@ -2796,14 +3013,7 @@ function backFromWorkspace() {
 
 function selectPipelineStage(stageIndex) {
   state.activeStage = stageIndex;
-  state.dashboardPage = 0;
   render();
-  if (stageIndex >= 2) {
-    requestAnimationFrame(() => {
-      const listing = document.getElementById('pipeline-listing');
-      if (listing) listing.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
 }
 
 function render() {
@@ -2815,6 +3025,8 @@ function render() {
   const nExp = document.getElementById('nav-exp');
   const nQc = document.getElementById('nav-qc');
   const nUpload = document.getElementById('nav-upload');
+  const nTickets = document.getElementById('nav-tickets');
+  const nEmployeeReport = document.getElementById('nav-employee-report');
   const nMasters = document.getElementById('nav-masters');
   const mastersSubmenu = document.getElementById('masters-submenu');
   const profileSelect = document.getElementById('profile-select');
@@ -2828,6 +3040,8 @@ function render() {
   if (nExp) nExp.className = v === 'exp' ? 'on' : '';
   if (nQc) nQc.className = v === 'qc' ? 'on' : '';
   if (nUpload) nUpload.className = v === 'upload' ? 'on' : '';
+  if (nTickets) nTickets.className = v === 'tickets' ? 'on' : '';
+  if (nEmployeeReport) nEmployeeReport.className = v === 'employee-report' ? 'on' : '';
   if (nMasters) {
     nMasters.className = 'masters-toggle' + (v === 'master' ? ' on' : '');
     nMasters.setAttribute('aria-expanded', String(state.mastersOpen));
@@ -2839,55 +3053,36 @@ function render() {
     });
   }
   
-  const titleEl = document.getElementById('page-title');
-  const dateFilter = document.getElementById('top-date-filter');
-  const sourceFilter = document.getElementById('top-source-filter');
   const container = document.getElementById('main-content');
   if (!container) return;
-  const pageWrap = container.parentElement;
+  const pageWrap = container;
   
-  if (pageWrap) pageWrap.classList.toggle('workspace-page', v === 'ws' && state.wsStep === 2 && !state.workspaceHtmlReadOnly && !state.workspaceXmlReadOnly);
+  if (pageWrap) pageWrap.classList.toggle('workspace-page', v === 'ws' && !state.workspaceHtmlReadOnly && !state.workspaceXmlReadOnly);
 
   if (v === 'dash') {
-    if (titleEl) titleEl.textContent = 'Dashboard';
-    if (dateFilter) dateFilter.style.display = 'flex';
-    if (sourceFilter) sourceFilter.style.display = 'flex';
     container.innerHTML = renderDashboard();
   } else if (v === 'exp') {
-    if (titleEl) titleEl.textContent = 'Case Explorer';
-    if (dateFilter) dateFilter.style.display = 'none';
-    if (sourceFilter) sourceFilter.style.display = 'none';
     container.innerHTML = renderExplorer();
   } else if (v === 'qc') {
-    if (titleEl) titleEl.textContent = 'QC Dashboard';
-    if (dateFilter) dateFilter.style.display = 'none';
-    if (sourceFilter) sourceFilter.style.display = 'none';
     container.innerHTML = renderQcDashboard();
   } else if (v === 'upload') {
-    if (titleEl) titleEl.textContent = 'Manual PDF Upload';
-    if (dateFilter) dateFilter.style.display = 'none';
-    if (sourceFilter) sourceFilter.style.display = 'none';
     container.innerHTML = renderUploadView();
+  } else if (v === 'tickets') {
+    container.innerHTML = renderTickets();
+  } else if (v === 'employee-report') {
+    container.innerHTML = renderEmployeeReport();
   } else if (v === 'upload-success') {
-    if (titleEl) titleEl.textContent = 'Upload Successful';
-    if (dateFilter) dateFilter.style.display = 'none';
-    if (sourceFilter) sourceFilter.style.display = 'none';
     container.innerHTML = renderUploadSuccess();
   } else if (v === 'master') {
-    if (titleEl) titleEl.textContent = state.masterScreen || 'Masters';
-    if (dateFilter) dateFilter.style.display = 'none';
-    if (sourceFilter) sourceFilter.style.display = 'none';
     container.innerHTML = renderMasterScreen();
   } else if (v === 'ws') {
-    if (titleEl) titleEl.textContent = state.workspaceViewOnly ? 'View Case' : state.workspaceFinalReadOnly ? 'View Final Case' : state.workspaceHtmlReadOnly ? 'View Digest/SNC HTML' : state.workspaceXmlReadOnly ? 'J.XML Source Viewer' : state.workspaceReadOnly ? 'View Case Meta-data' : 'Case Editing Workspace';
-    if (dateFilter) dateFilter.style.display = 'none';
-    if (sourceFilter) sourceFilter.style.display = 'none';
     container.innerHTML = renderWorkspace();
     container.querySelectorAll('.category-tree input[data-category-mixed="true"]').forEach(input => { input.indeterminate = true; });
   }
   if (state.detailsCaseIndex !== null && ['dash', 'exp', 'qc'].includes(v)) {
     container.insertAdjacentHTML('beforeend', renderCaseDetailsPanel());
   }
+  syncEditorComponentModalBounds();
 }
 
 function renderMasterScreen() {
@@ -2904,16 +3099,99 @@ function renderMasterScreen() {
     'IOS Master': ['Income Tax', 'GST', 'Customs'],
     'Other Type Master': ['Circular', 'Notification', 'Order']
   };
-  const rows = sampleRows[masterName] || [];
+  const search = String(state.masterSearch || '').trim().toLowerCase();
+  const rows = (sampleRows[masterName] || []).filter(row => !search || row.toLowerCase().includes(search));
+  const masterIdBase = {
+    'Journal Master': 10000000,
+    'Court Master': 10001000,
+    'Bench Master': 10002000,
+    'Bench Type Master': 10003000,
+    'Word and Phrase Master': 10004000,
+    'SLP Master': 10005000,
+    'Member and Counsel Master': 10006000,
+    'Case Outcome Master': 10007000,
+    'IOS Master': 10008000,
+    'Other Type Master': 10009000
+  }[masterName] || 10099000;
   return '<div class="card" style="padding:18px">' +
     '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px">' +
       '<div><div style="font-size:15px;font-weight:700">' + escapeHtml(masterName) + '</div><div style="font-size:12px;color:var(--mu);margin-top:4px">Manage reusable ' + escapeHtml(masterName.replace(' Master', '').toLowerCase()) + ' values.</div></div>' +
       '<button class="btn sm p" onclick="toast(\'Add new ' + escapeHtml(masterName.replace(/ Master$/, '').toLowerCase()) + ' entry\')">' + uiIcon('plus', 14) + ' Add New</button>' +
     '</div>' +
-    '<div class="table-wrap"><table><thead><tr><th>Name</th><th>Status</th><th>Action</th></tr></thead><tbody>' +
-      (rows.length ? rows.map((row, index) => '<tr><td>' + escapeHtml(row) + '</td><td><span class="badge c">Active</span></td><td><button class="btn sm" onclick="toast(\'Editing ' + escapeHtml(row) + '\')">Edit</button></td></tr>').join('') : '<tr><td colspan="3" style="text-align:center;padding:24px;color:var(--mu)">No master records yet.</td></tr>') +
+    '<div style="margin-bottom:12px"><input type="search" placeholder="Search ' + escapeHtml(masterName.replace(/ Master$/, '').toLowerCase()) + '..." aria-label="Search ' + escapeHtml(masterName) + '" value="' + escapeHtml(state.masterSearch || '') + '" oninput="state.masterSearch=this.value;render()"></div>' +
+    '<div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Is Active</th><th>Action</th></tr></thead><tbody>' +
+      (rows.length ? rows.map((row, index) => {
+        const editing = state.masterEditingIndex === index;
+        return '<tr><td>' + String(masterIdBase + index + 1).padStart(8, '0') + '</td><td>' + (editing ? '<input type="text" placeholder="Master name" value="' + escapeHtml(row) + '" data-master-name="' + index + '">' : escapeHtml(row)) + '</td><td>' + (editing ? '<select aria-label="Is active"><option value="1">1</option><option value="0">0</option></select>' : '1') + '</td><td><div style="display:flex;align-items:center;gap:6px">' + (editing ? '<button class="btn sm p" onclick="saveMasterEdit()">Save</button><button class="btn sm" onclick="state.masterEditingIndex=null;render()">Cancel</button>' : '<button class="btn sm" onclick="state.masterEditingIndex=' + index + ';render()">Edit</button>') + '<button class="btn sm" style="width:28px;padding:4px" aria-label="Delete ' + escapeHtml(row) + '" title="Delete" onclick="toast(\'Delete action for ' + escapeHtml(row) + '\')">' + uiIcon('trash', 14) + '</button></div></td></tr>';
+      }).join('') : '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--mu)">No master records yet.</td></tr>') +
     '</tbody></table></div>' +
   '</div>';
+}
+
+function renderTickets() {
+  const tickets = state.tickets || [];
+  return '<div class="card" style="padding:18px">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+      '<div><h2 class="sec-heading" style="margin:0">Tickets</h2><div style="font-size:12px;color:var(--mu);margin-top:4px">Track document and workflow issues.</div></div>' +
+      '<button class="btn sm p" onclick="raiseTicket()">+ New Ticket</button>' +
+    '</div>' +
+    '<div class="table-wrap"><table><thead><tr>' +
+      '<th>Ticket ID</th><th>Jira</th><th>Date</th><th>Document ID</th><th>Document Type</th><th>Status</th><th>Priority</th><th>Assigned To</th><th>Raised By</th>' +
+    '</tr></thead><tbody>' +
+      (tickets.length ? tickets.map(ticket => '<tr>' +
+        '<td>' + escapeHtml(ticket.id || '') + '</td><td><a href="' + escapeHtml(ticket.jiraUrl || ('https://jira.example.com/browse/' + ticket.id)) + '" target="_blank" rel="noopener noreferrer">Open Jira</a></td>' +
+        [ticket.date, ticket.documentId, ticket.documentType, ticket.status, ticket.priority, ticket.assignedTo, ticket.raisedBy]
+          .map(value => '<td>' + escapeHtml(value || '') + '</td>').join('') +
+        '</tr>').join('') : '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--mu)">No tickets raised.</td></tr>') +
+    '</tbody></table></div>' +
+  '</div>';
+}
+
+function renderEmployeeReport() {
+  const completedAssignments = CASES.flatMap(c => Array.isArray(c.assignmentHistory) ? c.assignmentHistory : []);
+  const filter = state.employeeReportTimeFilter || 'all';
+  const customStart = state.employeeReportStartDate ? new Date(state.employeeReportStartDate + 'T00:00:00').getTime() : 0;
+  const cutoff = customStart || (filter === '24h' ? Date.now() - 24 * 60 * 60 * 1000 : filter === '7d' ? Date.now() - 7 * 24 * 60 * 60 * 1000 : filter === '30d' ? Date.now() - 30 * 24 * 60 * 60 * 1000 : 0);
+  const filteredAssignments = completedAssignments.filter(assignment => !cutoff || new Date(assignment.reassignedAt).getTime() >= cutoff);
+  const byEmployee = {};
+  filteredAssignments.forEach(assignment => {
+    if (!assignment.user || !Number.isFinite(assignment.durationMs)) return;
+    byEmployee[assignment.user] = byEmployee[assignment.user] || { count: 0, totalMs: 0 };
+    byEmployee[assignment.user].count += 1;
+    byEmployee[assignment.user].processed = (byEmployee[assignment.user].processed || 0) + 1;
+    byEmployee[assignment.user].totalMs += assignment.durationMs;
+    byEmployee[assignment.user].maxMs = Math.max(byEmployee[assignment.user].maxMs || 0, assignment.durationMs);
+  });
+  CASES.forEach(c => {
+    const employee = c.assignedTo;
+    if (!employee || (cutoff && c.assignedAt && new Date(c.assignedAt).getTime() < cutoff)) return;
+    byEmployee[employee] = byEmployee[employee] || { count: 0, totalMs: 0, maxMs: 0, processed: 0 };
+    byEmployee[employee].count += 1;
+  });
+  const employees = Object.keys(byEmployee).sort().map(employee => {
+    const data = byEmployee[employee];
+    return [employee, data.count, data.processed || 0, data.processed ? formatEmployeeDuration(data.totalMs / data.processed) : '—', data.processed ? formatEmployeeDuration(data.maxMs) : '—'];
+  });
+  return '<div class="card" style="padding:18px">' +
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px"><div><h2 class="sec-heading" style="margin:0">Employee Report</h2><div style="font-size:12px;color:var(--mu);margin-top:4px">Assignment and processing-time summary.</div></div><div style="display:flex;align-items:center;gap:6px"><button type="button" class="btn sm" title="Choose start date" aria-label="Choose employee report start date" onclick="openEmployeeReportDatePicker()">📅</button><input id="employee-report-date-picker" type="date" value="' + escapeHtml(state.employeeReportStartDate || '') + '" aria-label="Employee report start date" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" onchange="state.employeeReportStartDate=this.value;state.employeeReportTimeFilter=\'custom\';render()"><select aria-label="Filter employee report by time" onchange="state.employeeReportTimeFilter=this.value;state.employeeReportStartDate=\'\';render()" style="width:130px"><option value="all"' + (filter === 'all' && !customStart ? ' selected' : '') + '>All time</option><option value="24h"' + (filter === '24h' ? ' selected' : '') + '>Last 24 hours</option><option value="7d"' + (filter === '7d' ? ' selected' : '') + '>Last 7 days</option><option value="30d"' + (filter === '30d' ? ' selected' : '') + '>Last 30 days</option><option value="custom"' + (customStart ? ' selected' : '') + '>Custom date</option></select></div></div>' +
+    '<div class="table-wrap"><table><thead><tr><th>Employee</th><th>Alloted Case</th><th>Processed cases</th><th>Average Processing Time</th><th>Maximum time taken to process the case</th></tr></thead><tbody>' +
+    (employees.length ? employees.map(employee => '<tr>' + employee.map(value => '<td>' + escapeHtml(String(value)) + '</td>').join('') + '</tr>').join('') : '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--mu)">No assignment records found for this period.</td></tr>') +
+    '</tbody></table></div></div>';
+}
+
+function openEmployeeReportDatePicker() {
+  const picker = document.getElementById('employee-report-date-picker');
+  if (!picker) return;
+  if (typeof picker.showPicker === 'function') picker.showPicker();
+  else picker.click();
+}
+
+function formatEmployeeDuration(durationMs) {
+  const totalMinutes = Math.max(1, Math.round(durationMs / 60000));
+  const days = Math.floor(totalMinutes / 1440);
+  const hours = Math.floor((totalMinutes % 1440) / 60);
+  const minutes = totalMinutes % 60;
+  return (days ? days + 'd ' : '') + (hours ? hours + 'h ' : '') + minutes + 'm';
 }
 
 // 1. DASHBOARD
@@ -2924,9 +3202,29 @@ function renderDashboard() {
 
   const kpis = dashboardMainKpis(t);
 
-  let html = '<div class="kpis">';
+  let html = '<div style="display:flex;justify-content:flex-end;align-items:center;gap:6px;flex-wrap:wrap;margin-top:-6px;margin-bottom:10px;line-height:1">' +
+    '<button type="button" class="btn sm" onclick="openFindStatusModal()">Find Status</button>' +
+    '<div class="filter-pill" style="cursor:pointer;padding:2px 6px;min-height:24px" title="Choose a dashboard start date">' +
+      '<button type="button" aria-label="Open dashboard calendar" title="Open calendar" onclick="openDashboardDatePicker()" style="display:inline-flex;align-items:center;padding:0;border:0;background:transparent;color:var(--mu);cursor:pointer;line-height:1">' + uiIcon('calendar', 13) + '</button>' +
+      '<input id="dashboard-date-picker" type="date" aria-label="Dashboard start date" value="' + escapeHtml(state.dashboardStartDate) + '" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none" onchange="state.dashboardStartDate=this.value;state.dashboardTimeFilter=this.value ? &quot;custom&quot; : &quot;all&quot;;render()">' +
+      '<select aria-label="Filter dashboard by time" style="width:84px;max-width:84px;line-height:1.1;padding-top:0;padding-bottom:0" onchange="state.dashboardTimeFilter=this.value;render()">' +
+        '<option value="all"' + (state.dashboardTimeFilter === 'all' ? ' selected' : '') + '>All time</option>' +
+        '<option value="24h"' + (state.dashboardTimeFilter === '24h' ? ' selected' : '') + '>Last 24 hours</option>' +
+        '<option value="7d"' + (state.dashboardTimeFilter === '7d' ? ' selected' : '') + '>Last 7 days</option>' +
+        '<option value="30d"' + (state.dashboardTimeFilter === '30d' ? ' selected' : '') + '>Last 30 days</option>' +
+      '</select>' +
+    '</div>' +
+    '<label class="filter-pill" style="padding:2px 6px;min-height:24px">Source' +
+      '<select aria-label="Filter dashboard by source" style="width:118px;max-width:118px;text-overflow:ellipsis;line-height:1.1;padding-top:0;padding-bottom:0" onchange="state.sourceFilter=this.value;render()">' +
+        '<option value="">All sources</option>' +
+        COURTS.map(source => '<option value="' + escapeHtml(source) + '"' + (state.sourceFilter === source ? ' selected' : '') + '>' + escapeHtml(source) + '</option>').join('') +
+      '</select>' +
+    '</label>' +
+  '</div>' +
+  '<div class="kpis">';
   kpis.forEach(k => {
-    html += '<div class="card kpi-card">' +
+    const queueScope = k.label === 'QC 1 To Review' ? 'review' : k.label === 'Failed / Exceptions' ? 'failed' : '';
+    html += '<div class="card kpi-card" ' + (queueScope ? 'style="cursor:pointer" role="button" tabindex="0" onclick="openExplorerQueue(\'' + queueScope + '\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openExplorerQueue(\'' + queueScope + '\')}"' : '') + '>' +
       '<div class="kpi-top">' +
         '<span class="kpi-label">' + k.label + '</span>' +
         '<span class="kpi-trend ' + k.cls + '">' + k.trend + '</span>' +
@@ -2947,12 +3245,13 @@ function renderDashboard() {
   html += '<div class="pipe-rail">';
   stagesToShow.forEach((stgIdx, pos) => {
     const data = PIPE_DATA[t][stgIdx];
-    const failedCount = dashboardFailedCases(stgIdx, t).length;
+    const failedCount = stgIdx === 8 ? 0 : dashboardFailedCases(stgIdx, t).length;
     const reviewCount = stgIdx === 9 ? dashboardToReviewCases(stgIdx, t).length : 0;
     const stageData = Object.assign({}, data, {
       f: failedCount,
-      c: data.tot - data.p - failedCount - reviewCount
+      c: stgIdx === 2 ? data.selected : data.tot - data.p - failedCount - reviewCount
     });
+    if (stgIdx === 2) stageData.rejected = stageData.tot - stageData.selected - stageData.p - stageData.f;
     if (stgIdx === 9) stageData.r = reviewCount;
     const isActive = stgIdx === state.activeStage;
     const isDownloadStage = (stgIdx === 0);
@@ -2978,6 +3277,7 @@ function renderDashboard() {
       const pPct = (stageData.p / stageData.tot) * 100;
       const fPct = (stageData.f / stageData.tot) * 100;
       const rPct = stgIdx === 9 ? (stageData.r / stageData.tot) * 100 : 0;
+      const rejectedPct = stgIdx === 2 ? (stageData.rejected / stageData.tot) * 100 : 0;
 
       html += '<div class="pipe-stage ' + (isActive ? 'active' : '') + '" onclick="selectPipelineStage(' + stgIdx + ')">' +
         '<div class="pipe-stage-hdr">' +
@@ -2989,9 +3289,11 @@ function renderDashboard() {
           '<div style="width:' + cPct + '%;background:var(--ok)"></div>' +
           '<div style="width:' + pPct + '%;background:var(--wa)"></div>' +
           '<div style="width:' + fPct + '%;background:var(--er)"></div>' +
+          (stgIdx === 2 ? '<div style="width:' + rejectedPct + '%;background:var(--mu)"></div>' : '') +
           (stgIdx === 9 ? '<div style="width:' + rPct + '%;background:var(--mr)"></div>' : '') +
         '</div>' +
-        '<div class="pipe-stats-row"><span><i class="dot d-c"></i>Completed</span><b>' + num(stageData.c) + '</b></div>' +
+        '<div class="pipe-stats-row"><span><i class="dot d-c"></i>' + (stgIdx === 2 ? 'Selected' : 'Completed') + '</span><b>' + num(stageData.c) + '</b></div>' +
+        (stgIdx === 2 ? '<div class="pipe-stats-row"><span><i class="dot d-f" style="background:var(--mu)"></i>Rejected</span><b>' + num(stageData.rejected) + '</b></div>' : '') +
         '<div class="pipe-stats-row"><span><i class="dot d-p"></i>In Process</span><b>' + num(stageData.p) + '</b></div>' +
         '<div class="pipe-stats-row"><span><i class="dot d-f"></i>Failed</span><b>' + num(failedCount) + '</b></div>' +
         (stgIdx === 9 ? '<div class="pipe-stats-row"><span><i class="dot d-mr"></i>To Review</span><b>' + num(reviewCount) + '</b></div>' : '') +
@@ -3002,34 +3304,53 @@ function renderDashboard() {
 
   // Detailed Stage Analytics Section
   const currStg = state.activeStage;
-  const currFailedCount = dashboardFailedCases(currStg, t).length;
+  const currFailedCount = currStg === 8 ? 0 : dashboardFailedCases(currStg, t).length;
   const currReviewCount = currStg === 9 ? dashboardToReviewCases(currStg, t).length : 0;
-  const currData = Object.assign({}, PIPE_DATA[t][currStg], {
-    c: PIPE_DATA[t][currStg].tot - PIPE_DATA[t][currStg].p - currFailedCount - currReviewCount,
-    f: currFailedCount
-  });
+  const currData = currStg === 2
+    ? Object.assign({}, PIPE_DATA[t][currStg], { f: currFailedCount })
+    : Object.assign({}, PIPE_DATA[t][currStg], {
+      c: PIPE_DATA[t][currStg].tot - PIPE_DATA[t][currStg].p - currFailedCount - currReviewCount,
+      f: currFailedCount
+    });
   if (currStg === 9) currData.r = currReviewCount;
-  const bifurcations = currStg === 9
-    ? [{
-      title: 'QC1 Status Distribution',
-      items: [
-        ['Completed', currData.c / currData.tot],
-        ['In Process', currData.p / currData.tot],
-        ['Failed', currData.f / currData.tot],
-        ['To Review', currData.r / currData.tot]
-      ]
-    }]
-    : STAGE_BIFURCATIONS[currStg] || STAGE_BIFURCATIONS[2];
+  if (currStg === 2) currData.rejected = currData.tot - currData.selected - currData.p - currData.f;
+  const bifurcations = STAGE_BIFURCATIONS[currStg] || [];
+
+  const successRate = currStg === 2
+    ? (currData.selected / currData.tot) * 100
+    : (currData.c / currData.tot) * 100;
+  const breakdownTotal = currStg === 2 ? currData.selected : currData.tot;
+  let stageKpiCards = '';
+  if (currStg === 2) {
+    [
+      ['Selected', currData.selected, 'var(--ok)'],
+      ['Rejected', currData.rejected, 'var(--mu)'],
+      ['Failed', currData.f, 'var(--er)'],
+      ['In Process', currData.p, 'var(--wa)']
+    ].forEach(metric => {
+      stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">' + metric[0] + '</span><div class="kpi-val" style="font-size:20px;color:' + metric[2] + '">' + num(metric[1]) + '</div></div>';
+    });
+    stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">Success Rate</span><div class="kpi-val" style="font-size:20px;color:var(--accent)">' + successRate.toFixed(1) + '%</div></div>';
+  } else {
+    if (currStg !== 0) {
+      stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">Total in Stage</span><div class="kpi-val" style="font-size:20px">' + num(currData.tot) + '</div></div>';
+    }
+    stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">Completed</span><div class="kpi-val" style="font-size:20px;color:var(--ok)">' + num(currData.c) + '</div></div>';
+    if (currStg !== 0) {
+      stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">In Process</span><div class="kpi-val" style="font-size:20px;color:var(--wa)">' + num(currData.p) + '</div></div>';
+    }
+    stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">Failed / Exceptions</span><div class="kpi-val" style="font-size:20px;color:var(--er)">' + num(currData.f) + '</div></div>';
+    if (currStg === 9) {
+      stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">To Review</span><div class="kpi-val" style="font-size:20px;color:var(--mr)">' + num(currData.r) + '</div></div>';
+    }
+    stageKpiCards += '<div class="card kpi-card"><span class="kpi-label">Success Rate</span><div class="kpi-val" style="font-size:20px;color:var(--accent)">' + successRate.toFixed(1) + '%</div></div>';
+  }
 
   html += '<div style="margin-top:16px">' +
     '<h2 class="sec-heading">Stage ' + (currStg + 1) + ': ' + stageName(currStg, t) + ' — Detailed Analytics</h2>' +
-    '<div class="stage-kpis" ' + (currStg === 9 ? 'style="grid-template-columns:repeat(6, 1fr)"' : '') + '>' +
-      '<div class="card kpi-card"><span class="kpi-label">Total in Stage</span><div class="kpi-val" style="font-size:20px">' + num(currData.tot) + '</div></div>' +
-      '<div class="card kpi-card"><span class="kpi-label">Completed</span><div class="kpi-val" style="font-size:20px;color:var(--ok)">' + num(currData.c) + '</div></div>' +
-      '<div class="card kpi-card"><span class="kpi-label">In Process</span><div class="kpi-val" style="font-size:20px;color:var(--wa)">' + num(currData.p) + '</div></div>' +
-      '<div class="card kpi-card"><span class="kpi-label">Failed / Exceptions</span><div class="kpi-val" style="font-size:20px;color:var(--er)">' + num(currData.f) + '</div></div>' +
-      (currStg === 9 ? '<div class="card kpi-card"><span class="kpi-label">To Review</span><div class="kpi-val" style="font-size:20px;color:var(--mr)">' + num(currData.r) + '</div></div>' : '') +
-      '<div class="card kpi-card"><span class="kpi-label">Success Rate</span><div class="kpi-val" style="font-size:20px;color:var(--accent)">' + ((currData.c / currData.tot) * 100).toFixed(1) + '%</div></div>' +
+    (currStg === 2 ? '<div style="margin-bottom:10px"><span class="badge tag">Total: ' + num(currData.tot) + '</span></div>' : '') +
+    '<div class="stage-kpis" ' + (currStg === 9 ? 'style="grid-template-columns:repeat(6, 1fr)"' : currStg === 2 ? 'style="grid-template-columns:repeat(5, 1fr)"' : currStg === 0 ? 'style="grid-template-columns:repeat(3, 1fr)"' : '') + '>' +
+      stageKpiCards +
     '</div>' +
     '<div class="breakdowns-grid">';
 
@@ -3040,292 +3361,12 @@ function renderDashboard() {
       html += '<div class="breakdown-row">' +
         '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + it[0] + '">' + it[0] + '</span>' +
         '<div class="breakdown-track"><div class="breakdown-fill" style="width:' + (it[1] * 100) + '%"></div></div>' +
-        '<b style="text-align:right">' + num(Math.round(currData.tot * it[1])) + '</b>' +
+        '<b style="text-align:right">' + num(Math.round(breakdownTotal * it[1])) + '</b>' +
       '</div>';
     });
     html += '</div>';
   });
   html += '</div>';
-
-  // Stage Table logic per user rules:
-  // Stage 0 (Download) -> REMOVED
-  // Stage 1 (Data Syncing) -> REMOVED
-  // Stage 2 (Selection) -> No Case Title, 'Source' instead of Court & Bench, No Action column, Non-clickable rows
-  // Stage 3 (J.XML) -> No Case Title, 'Source' instead of Court & Bench, Action = 'View Judgement XML' (opens in new tab)
-  // Stage 4 (Meta-Data) -> Read-only listing; no Case Title, 'Source' instead of Court & Bench
-  // Stage 5+ -> Standard tables
-  if (currStg >= 2) {
-    const failedCases = dashboardFailedCases(currStg, t);
-    const toReviewCases = currStg === 9 ? dashboardToReviewCases(currStg, t) : [];
-    const listCases = currStg === 9
-      ? (state.dashboardQc1Tab === 'review' ? toReviewCases : failedCases)
-      : failedCases;
-    const pageSize = [15, 30, 100].includes(state.dashboardPageSize) ? state.dashboardPageSize : 15;
-    const totalPages = Math.max(1, Math.ceil(listCases.length / pageSize));
-    if (state.dashboardPage >= totalPages) state.dashboardPage = 0;
-    const pagedCases = listCases.slice(state.dashboardPage * pageSize, (state.dashboardPage + 1) * pageSize);
-    const failedAssignmentStage = currStg < 7 ? 'XML Conversion' : 'QC1';
-    const listingColumnCount = currStg >= 5 ? 13 : (currStg === 2 ? 10 : 9);
-    if (currStg === 10) {
-      listCases.forEach(c => {
-        if (!c.caseAutoId) c.caseAutoId = nextCaseAutoId();
-      });
-    }
-    html += '<div class="card table-card" id="pipeline-listing">' +
-      '<div style="padding:12px 15px 0;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">' +
-        (currStg === 9
-          ? '<div class="seg-bar">' +
-          '<button class="' + (state.dashboardQc1Tab === 'failed' ? 'on' : '') + '" onclick="state.dashboardQc1Tab=\'failed\';state.dashboardPage=0;render()">Failed (' + num(failedCases.length) + ')</button>' +
-          '<button class="' + (state.dashboardQc1Tab === 'review' ? 'on' : '') + '" onclick="state.dashboardQc1Tab=\'review\';state.dashboardPage=0;render()">To Review (' + num(toReviewCases.length) + ')</button>' +
-          '</div>'
-          : '<span></span>') +
-        '<label style="font-size:11.5px;color:var(--mu)">Rows per page <select onchange="state.dashboardPageSize=Number(this.value);state.dashboardPage=0;render()"><option value="15" ' + (pageSize === 15 ? 'selected' : '') + '>15</option><option value="30" ' + (pageSize === 30 ? 'selected' : '') + '>30</option><option value="100" ' + (pageSize === 100 ? 'selected' : '') + '>100</option></select></label>' +
-      '</div>' +
-      '<div class="table-header">' +
-        '<div style="font-weight:700;font-size:13px">' + (currStg >= 8 ? uiIcon('shieldCheck') + ' ' : '') + (currStg === 9 ? (state.dashboardQc1Tab === 'review' ? 'To Review Cases at Stage ' : 'Failed Cases at Stage ') : 'Failed Case at Stage ') + (currStg + 1) + ' (' + stageName(currStg, t) + ')</div>' +
-        '<div style="font-size:11.5px;color:var(--mu)">' +
-          (currStg === 9 ? num(listCases.length) + ' cases' : 'Failed cases assigned for manual editing') +
-        '</div>' +
-      '</div>' +
-      '<div class="table-wrap"><table><thead><tr>';
-
-    if (currStg >= 5) {
-      html += '<th>GUID</th><th>CaseAutoID</th><th>Court</th><th>Category</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Marking</th><th>Stage</th><th class="status-column">Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 2) {
-      // STAGE 3: Selection
-      html += '<th>GUID</th><th>Source</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Ingested</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 3) {
-      // STAGE 4: J.XML
-      html += '<th>GUID</th><th>Source</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 4) {
-      // STAGE 5: Meta-Data is view-only
-      html += '<th>GUID</th><th>Source</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 5) {
-      // STAGE 6: Digest/SNC read-only HTML editor
-      html += '<th>GUID</th><th>Source</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 6) {
-      // STAGE 7: XML Binding listing
-      html += '<th>GUID</th><th>Court</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 7) {
-      // STAGE 8: Case DB Push uses the QC1 listing columns.
-      html += '<th>GUID</th><th>CaseAutoID</th><th>Court</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 8) {
-      // STAGE 9: Hyperlinking uses the XML Binding listing columns.
-      html += '<th>GUID</th><th>Court</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 9) {
-      // STAGE 10: QC1 uses the Hyperlinking listing columns.
-      html += '<th>GUID</th><th>CaseAutoID</th><th>Court</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else if (currStg === 10) {
-      // STAGE 11: QC2 uses the QC1 listing columns and a single editor action.
-      html += '<th>GUID</th><th>CaseAutoID</th><th>Court</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Assigned To</th><th>Details</th><th>Action</th>';
-    } else {
-      // Other stages
-      html += '<th>Case ID</th><th>Title & Parties</th><th>Court & Bench</th><th>Treatment</th><th>Marking</th><th>Stage</th><th>Status</th><th>Details</th><th>Action</th>';
-    }
-
-    html += '</tr></thead><tbody>';
-
-    if (!listCases.length) {
-      html += '<tr><td colspan="' + listingColumnCount + '" style="text-align:center;padding:24px;color:var(--mu)">' +
-        (currStg === 9 && state.dashboardQc1Tab === 'review' ? 'No cases to review at this stage.' : 'No failed cases at this stage.') +
-        '</td></tr>';
-    }
-    pagedCases.forEach(c => {
-      const stDisplay = c.stage > currStg ? 'c' : c.st;
-      const failedCaseAction = dashboardFailedCaseAction(c);
-
-      if (currStg >= 5) {
-        const parties = c.title.split(/\s+v\.\s+/i);
-        const party1 = parties[0] || c.title;
-        const party2 = parties[1] || '—';
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + escapeHtml(c.guid) + '</b></td>' +
-          '<td>' + escapeHtml(c.caseAutoId || '—') + '</td>' +
-          '<td>' + escapeHtml(c.court) + '</td>' +
-          '<td>' + explorerCategoryCell(c) + '</td>' +
-          '<td>' + escapeHtml(party1) + '</td>' +
-          '<td>' + escapeHtml(party2) + '</td>' +
-          '<td>' + escapeHtml(c.caseno || '—') + '</td>' +
-          '<td>' + escapeHtml(c.mk || '—') + '<br>' + escapeHtml(c.tr || '—') + '</td>' +
-          '<td>' + escapeHtml(failedAssignmentStage) + '</td>' +
-          '<td class="status-column">' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 2) {
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + c.ts + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 3) {
-        // J.XML: Show XML access only after the case completes this stage.
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 4) {
-        // Open the metadata workspace in read-only mode.
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 5) {
-        // Digest/SNC cases open in the HTML editor in read-only mode.
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 6) {
-        const parties = c.title.split(/\s+v\.\s+/i);
-        const party1 = parties[0] || c.title;
-        const party2 = parties[1] || '—';
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td>' + party1 + '</td>' +
-          '<td>' + party2 + '</td>' +
-          '<td>' + c.caseno + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 7) {
-        const parties = c.title.split(/\s+v\.\s+/i);
-        const party1 = parties[0] || c.title;
-        const party2 = parties[1] || '—';
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + (c.st === 'p' || c.st === 'f' ? '' : (c.caseAutoId || '—')) + '</td>' +
-          '<td>' + c.court + '</td>' +
-          '<td>' + party1 + '</td>' +
-          '<td>' + party2 + '</td>' +
-          '<td>' + c.caseno + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 8) {
-        const parties = c.title.split(/\s+v\.\s+/i);
-        const party1 = parties[0] || c.title;
-        const party2 = parties[1] || '—';
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td>' + party1 + '</td>' +
-          '<td>' + party2 + '</td>' +
-          '<td>' + c.caseno + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 9) {
-        const parties = c.title.split(/\s+v\.\s+/i);
-        const party1 = parties[0] || c.title;
-        const party2 = parties[1] || '—';
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + (c.caseAutoId || '—') + '</td>' +
-          '<td>' + c.court + '</td>' +
-          '<td>' + party1 + '</td>' +
-          '<td>' + party2 + '</td>' +
-          '<td>' + c.caseno + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else if (currStg === 10) {
-        const parties = c.title.split(/\s+v\.\s+/i);
-        const party1 = parties[0] || c.title;
-        const party2 = parties[1] || '—';
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
-          '<td>' + (c.caseAutoId || '—') + '</td>' +
-          '<td>' + c.court + '</td>' +
-          '<td>' + party1 + '</td>' +
-          '<td>' + party2 + '</td>' +
-          '<td>' + c.caseno + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      } else {
-        html += '<tr>' +
-          '<td><b style="color:var(--pri)">' + c.id + '</b></td>' +
-          '<td><b>' + c.title + '</b><br><span style="font-size:10.5px;color:var(--mu)">' + c.cg + '</span></td>' +
-          '<td>' + c.court + '</td>' +
-          '<td><span class="badge tag">' + c.tr + '</span></td>' +
-          '<td><span class="badge marking">' + c.mk + '</span></td>' +
-          '<td>' + failedAssignmentStage + '</td>' +
-          '<td>' + dashboardStatusBadge(c) + '</td>' +
-          '<td>' + escapeHtml(assignedToLabel(c, currStg)) + '</td>' +
-          '<td>' + caseDetailsButton(c) + '</td>' +
-          '<td>' + failedCaseAction + '</td>' +
-        '</tr>';
-      }
-    });
-
-    html += '</tbody></table></div>';
-    const firstVisible = listCases.length ? state.dashboardPage * pageSize + 1 : 0;
-    const lastVisible = Math.min((state.dashboardPage + 1) * pageSize, listCases.length);
-    html += '<div class="pagination">' +
-      '<div>Showing <b>' + firstVisible + '–' + lastVisible + '</b> of <b>' + listCases.length + '</b> cases · Page <b>' + (state.dashboardPage + 1) + '</b> of <b>' + totalPages + '</b></div>' +
-      '<div style="display:flex;gap:6px">' +
-        '<button class="btn sm" ' + (state.dashboardPage === 0 ? 'disabled' : '') + ' onclick="state.dashboardPage--;render()">Previous</button>' +
-        '<button class="btn sm" ' + (state.dashboardPage + 1 >= totalPages ? 'disabled' : '') + ' onclick="state.dashboardPage++;render()">Next</button>' +
-      '</div>' +
-    '</div>';
-    html += '</div>';
-  }
 
   html += '</div>';
   return html;
@@ -3372,6 +3413,18 @@ function deleteQcCase(caseIndex) {
   c.deleted = true;
   state.qcSelectedCases = state.qcSelectedCases.filter(index => index !== caseIndex);
   toast('Case moved to Deleted Cases.');
+  render();
+}
+
+function failDeletedQcCase(caseIndex) {
+  const c = CASES[caseIndex];
+  if (!c || c.deleted !== true) return;
+  c.deleted = false;
+  c.st = 'f';
+  c.qcStatus = 'Failed';
+  c.qcStage = c.deletedFromQcStatus === 'QC2 Done' ? 'QC2' : 'QC1';
+  delete c.deletedAt;
+  toast('Case marked as failed in both QC stages.');
   render();
 }
 
@@ -3475,11 +3528,11 @@ function renderQcDashboard() {
     '</div>' +
     '<div class="table-wrap"><table><thead><tr>' +
       (isDeletedTab ? '' : '<th><input class="qc-selection" type="checkbox" aria-label="Select all visible cases" ' + (allSelected ? 'checked' : '') + ' onchange="setQcSelectionForVisible(this.checked)"></th>') +
-      '<th>CaseAutoID</th><th>Court</th><th>Category</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Marking</th><th>Stage</th><th class="status-column">Status</th><th>Assigned To</th><th>View</th><th>Action</th>' +
+      '<th>CaseAutoID</th><th>Court</th><th>Bench</th><th>Category</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Marking</th><th>Stage</th><th class="status-column">Status</th><th>Assigned To</th><th>View</th><th>Action</th>' +
     '</tr></thead><tbody>';
 
   if (!cases.length) {
-    html += '<tr><td colspan="' + (isDeletedTab ? '12' : '13') + '" style="text-align:center;padding:30px;color:var(--mu)">' +
+    html += '<tr><td colspan="' + (isDeletedTab ? '13' : '14') + '" style="text-align:center;padding:30px;color:var(--mu)">' +
       (isDeletedTab ? 'No deleted cases.' : 'No cases currently match this QC queue.') +
     '</td></tr>';
   } else {
@@ -3491,25 +3544,28 @@ function renderQcDashboard() {
         (isDeletedTab ? '' : '<td><input class="qc-selection" type="checkbox" aria-label="Select ' + escapeHtml(c.title) + '" ' + (selected.has(c.i) ? 'checked' : '') + ' onchange="toggleQcCaseSelection(' + c.i + ',this.checked)"></td>') +
         '<td>' + escapeHtml(c.caseAutoId || '—') + '</td>' +
         '<td>' + escapeHtml(c.court) + '</td>' +
+        '<td>' + escapeHtml(caseBenchName(c)) + '</td>' +
         '<td>' + explorerCategoryCell(c) + '</td>' +
         '<td>' + escapeHtml(party1) + '</td>' +
         '<td>' + escapeHtml(party2) + '</td>' +
         '<td>' + escapeHtml(c.caseno || '—') + '</td>' +
         '<td>' + escapeHtml(c.mk || '—') + '<br>' + escapeHtml(c.tr || '—') + '</td>' +
-        '<td>' + (isDeletedTab ? 'Deleted' : escapeHtml(c.qcStage || 'QC1')) + '</td>' +
-        '<td class="status-column">' + (isDeletedTab ? 'Deleted' : escapeHtml(c.qcStatus)) + '</td>' +
-        '<td>' + (isDeletedTab ? '—' : escapeHtml(assignedToLabel(c, c.qcStage))) + '</td>' +
-        '<td>' + (isDeletedTab ? '—' : '<div style="display:flex;gap:5px;align-items:center;white-space:nowrap">' +
+        '<td>' + escapeHtml(c.qcStage || 'QC1') + '</td>' +
+        '<td class="status-column">' + escapeHtml(c.qcStatus || '—') + '</td>' +
+        '<td>' + escapeHtml(assignedToLabel(c, c.qcStage)) + '</td>' +
+        '<td><div style="display:flex;gap:5px;align-items:center;white-space:nowrap">' +
           '<button class="btn sm" style="padding:5px 7px" title="View case in read-only editor" aria-label="View case in read-only editor" onclick="viewQcCase(' + c.i + ')">' + uiIcon('eye', 14) + '</button>' +
           '<button class="btn sm" style="padding:5px 7px" title="Open HTML/PDF in new window" aria-label="Open HTML/PDF in new window" onclick="openQcCaseDocument(' + c.i + ')">' + uiIcon('html', 14) + '</button>' +
-        '</div>') + '</td>' +
-        '<td>' + (isDeletedTab ? '—' : '<div style="display:flex;gap:5px;align-items:center;white-space:nowrap">' +
-          (c.qcStatus === 'QC1 Done' ? '<button class="btn sm p" style="min-width:48px;padding:5px 8px" onclick="moveQcCasesToQc2([' + c.i + '])">Move</button>' : '') +
-          (c.qcStatus === 'QC2 Done'
-            ? '<button class="btn sm" style="width:32px;height:28px;padding:5px" title="Open QC2 case in editor" aria-label="Open QC2 case in editor" onclick="viewQcCase(' + c.i + ')">' + uiIcon('pencil', 14) + '</button>'
-            : '<button class="btn sm danger" style="min-width:48px;padding:5px 8px" onclick="markQcCasesFailed([' + c.i + '])">Fail</button>') +
-          qcDeleteAction(c) +
-        '</div>') + '</td>' +
+        '</div></td>' +
+        '<td><div style="display:flex;gap:5px;align-items:center;white-space:nowrap">' +
+          (isDeletedTab
+            ? '<button class="btn sm danger" style="min-width:92px;padding:5px 8px" title="Fail both QC stages" onclick="failDeletedQcCase(' + c.i + ')">Fail Both QC</button>'
+            : (c.qcStatus === 'QC1 Done' ? '<button class="btn sm p" style="min-width:48px;padding:5px 8px" onclick="moveQcCasesToQc2([' + c.i + '])">Move</button>' : '') +
+              (c.qcStatus === 'QC2 Done'
+                ? '<button class="btn sm" style="width:32px;height:28px;padding:5px" title="Edit QC2 case" aria-label="Edit QC2 case" onclick="editQc2Case(' + c.i + ')">' + uiIcon('pencil', 14) + '</button>'
+                : '<button class="btn sm danger" style="min-width:48px;padding:5px 8px" onclick="markQcCasesFailed([' + c.i + '])">Fail</button>') +
+              qcDeleteAction(c)) +
+        '</div></td>' +
       '</tr>';
     });
   }
@@ -3520,9 +3576,30 @@ function renderQcDashboard() {
 // 2. CASE EXPLORER
 function renderExplorer() {
   const isMyCases = state.scope === 'my';
+  const showFailureReason = state.scope === 'failed' || state.scope === 'review';
+  const showAction = state.scope !== 'all';
+  const failedCaseCount = CASES.filter(c => c.deleted !== true && c.st === 'f').length;
+  const reviewCaseCount = CASES.filter(c =>
+    c.deleted !== true &&
+    c.stage === 9 &&
+    c.st === 'mr' &&
+    (state.activeProfile === 'Bharat Sharma (Chief Editor)' || isCaseVisibleInExplorer(c, true))
+  ).length;
   
   // Per instruction: "The cases which are flagged for manual review will only reflect into my cases."
-  let filtered = CASES.filter(c => isCaseVisibleInExplorer(c, isMyCases));
+  let filtered;
+  if (state.scope === 'failed') {
+    filtered = CASES.filter(c => c.deleted !== true && c.st === 'f');
+  } else if (state.scope === 'review') {
+    filtered = CASES.filter(c =>
+      c.deleted !== true &&
+      c.stage === 9 &&
+      c.st === 'mr' &&
+      (state.activeProfile === 'Bharat Sharma (Chief Editor)' || isCaseVisibleInExplorer(c, true))
+    );
+  } else {
+    filtered = CASES.filter(c => isCaseVisibleInExplorer(c, isMyCases));
+  }
 
   if (state.sourceFilter) {
     filtered = filtered.filter(c => c.court.toLowerCase().includes(state.sourceFilter.toLowerCase()));
@@ -3544,52 +3621,28 @@ function renderExplorer() {
   if (state.explorerStageFilter) {
     filtered = filtered.filter(c => explorerStageLabel(c) === state.explorerStageFilter);
   }
-  if (state.treatFilter) {
-    filtered = filtered.filter(c => c.tr === state.treatFilter);
+
+  if (state.assignedFilter) {
+    filtered = filtered.filter(c => assignedToLabel(c) === state.assignedFilter);
   }
 
-  if (state.sortOrder === 'random') {
-    filtered.forEach(c => {
-      if (typeof c.explorerRandomOrder !== 'number') c.explorerRandomOrder = Math.random();
-    });
-    if (isMyCases) {
-      filtered.sort((a, b) => a.explorerRandomOrder - b.explorerRandomOrder);
-    } else {
-      if (!state.explorerStatusOrder) {
-        state.explorerStatusOrder = ['In Edit Mode', 'QC1 Done', 'QC2 Done'].sort(() => Math.random() - 0.5);
-      }
-      const statusGroups = new Map();
-      filtered.forEach(c => {
-        const status = explorerStatus(c);
-        if (!statusGroups.has(status)) statusGroups.set(status, []);
-        statusGroups.get(status).push(c);
-      });
-      statusGroups.forEach(group => group.sort((a, b) => a.explorerRandomOrder - b.explorerRandomOrder));
-      filtered = [];
-      while (Array.from(statusGroups.values()).some(group => group.length)) {
-        state.explorerStatusOrder.forEach(status => {
-          const group = statusGroups.get(status);
-          if (group && group.length) filtered.push(group.shift());
-        });
-      }
-    }
-  } else {
-    filtered.sort((a, b) => {
-      if (state.sortOrder === 'new') return b.ts.localeCompare(a.ts);
-      if (state.sortOrder === 'old') return a.ts.localeCompare(b.ts);
-      return a.title.localeCompare(b.title);
-    });
-  }
+  filtered.sort((a, b) => {
+    if (state.sortOrder === 'new') return b.ts.localeCompare(a.ts);
+    if (state.sortOrder === 'old') return a.ts.localeCompare(b.ts);
+    return a.title.localeCompare(b.title);
+  });
 
   const pageSize = [15, 30, 100].includes(state.explorerPageSize) ? state.explorerPageSize : 15;
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   if (state.page >= totalPages || state.page < 0) state.page = 0;
   const pagedCases = filtered.slice(state.page * pageSize, (state.page + 1) * pageSize);
 
-  let html = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">' +
-    '<div class="seg-bar">' +
-      '<button class="' + (isMyCases ? 'on' : '') + '" onclick="state.scope=\'my\';state.page=0;render()">My Cases (' + CASES.filter(c => isCaseVisibleInExplorer(c, true)).length + ')</button>' +
-      '<button class="' + (!isMyCases ? 'on' : '') + '" onclick="state.scope=\'all\';state.page=0;render()">All Cases (Repository)</button>' +
+  let html = '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px">' +
+    '<div class="seg-bar" style="display:flex;flex-wrap:wrap">' +
+      '<button class="' + (state.scope === 'my' ? 'on' : '') + '" onclick="openExplorerQueue(\'my\')">My Cases (' + CASES.filter(c => isCaseVisibleInExplorer(c, true)).length + ')</button>' +
+      '<button class="' + (state.scope === 'failed' ? 'on' : '') + '" onclick="openExplorerQueue(\'failed\')">Failed (' + num(failedCaseCount) + ')</button>' +
+      '<button class="' + (state.scope === 'review' ? 'on' : '') + '" onclick="openExplorerQueue(\'review\')">Review (' + num(reviewCaseCount) + ')</button>' +
+      '<button class="' + (state.scope === 'all' ? 'on' : '') + '" onclick="openExplorerQueue(\'all\')">All Cases</button>' +
     '</div>' +
     '<div style="display:flex;gap:8px;align-items:center">' +
       '<button class="btn sm p" onclick="navigate(\'upload\')">' + uiIcon('plus') + ' Upload PDF Manually</button>' +
@@ -3610,14 +3663,16 @@ function renderExplorer() {
           '<option value="QC1 Done" ' + (state.statusFilter==='QC1 Done'?'selected':'') + '>QC1 Done</option>' +
           '<option value="QC2 Done" ' + (state.statusFilter==='QC2 Done'?'selected':'') + '>QC2 Done</option>' +
         '</select>' +
-        '<select onchange="state.treatFilter=this.value;state.page=0;render()"><option value="">All Treatments</option><option value="Digest" ' + (state.treatFilter==='Digest'?'selected':'') + '>Digest</option><option value="SNC" ' + (state.treatFilter==='SNC'?'selected':'') + '>SNC</option><option value="URO" ' + (state.treatFilter==='URO'?'selected':'') + '>URO</option></select>' +
-        '<select onchange="state.sortOrder=this.value;state.page=0;render()"><option value="random" ' + (state.sortOrder==='random'?'selected':'') + '>Random Order</option><option value="new" ' + (state.sortOrder==='new'?'selected':'') + '>Newest First</option><option value="old" ' + (state.sortOrder==='old'?'selected':'') + '>Oldest First</option><option value="title" ' + (state.sortOrder==='title'?'selected':'') + '>Title A–Z</option></select>' +
-        '<label style="font-size:11.5px;color:var(--mu)">Rows per page <select onchange="state.explorerPageSize=Number(this.value);state.page=0;render()"><option value="15" ' + (pageSize === 15 ? 'selected' : '') + '>15</option><option value="30" ' + (pageSize === 30 ? 'selected' : '') + '>30</option><option value="100" ' + (pageSize === 100 ? 'selected' : '') + '>100</option></select></label>' +
+        '<select aria-label="Filter by assigned to" onchange="state.assignedFilter=this.value;state.page=0;render()"><option value="">Assigned To: All</option>' +
+          Array.from(new Set(CASES.filter(c => isCaseVisibleInExplorer(c, isMyCases)).map(c => assignedToLabel(c)))).filter(Boolean).sort().map(u => '<option value="' + escapeHtml(u) + '"' + (state.assignedFilter === u ? ' selected' : '') + '>' + escapeHtml(u) + '</option>').join('') +
+        '</select>' +
+        '<select onchange="state.sortOrder=this.value;state.page=0;render()"><option value="new" ' + (state.sortOrder==='new'?'selected':'') + '>Newest First</option><option value="old" ' + (state.sortOrder==='old'?'selected':'') + '>Oldest First</option><option value="title" ' + (state.sortOrder==='title'?'selected':'') + '>Title A–Z</option></select>' +
+        '<label style="font-size:11.5px;color:var(--mu)"><select aria-label="Rows per page" onchange="state.explorerPageSize=Number(this.value);state.page=0;render()"><option value="15" ' + (pageSize === 15 ? 'selected' : '') + '>15</option><option value="30" ' + (pageSize === 30 ? 'selected' : '') + '>30</option><option value="100" ' + (pageSize === 100 ? 'selected' : '') + '>100</option></select></label>' +
       '</div>' +
-      '<div style="font-size:11.5px;color:var(--mu)">Showing <b>' + filtered.length + '</b> cases</div>' +
+      '<div style="font-size:11.5px;color:var(--mu)"><b>' + filtered.length + '</b> cases</div>' +
     '</div>' +
     '<div class="table-wrap"><table><thead><tr>' +
-      '<th>GUID</th><th>CaseAutoID</th><th>Court</th><th>Category</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Marking</th><th>Stage</th><th class="status-column">Status</th><th>Assigned To</th><th>Details</th><th>Action</th>' +
+      '<th>GUID</th><th>CaseAutoID</th><th>Created at</th><th>Order date</th><th>Is Most Urgent</th><th>Citation</th><th>Court</th><th>Bench</th><th>Category</th><th>Party 1</th><th>Party 2</th><th>Appeal Number</th><th>Marking</th><th>Assigned by</th><th>Assigned at</th><th>Assigned To</th><th>Stage</th><th class="status-column">Status</th>' + (showFailureReason ? '<th>Notes / Reason</th>' : '') + '<th>Details</th>' + (showAction ? '<th>Action</th>' : '') +
     '</tr></thead><tbody>';
 
   if (pagedCases.length > 0) {
@@ -3628,21 +3683,29 @@ function renderExplorer() {
       html += '<tr>' +
         '<td><b style="color:var(--pri)">' + c.guid + '</b></td>' +
         '<td>' + (c.caseAutoId || '—') + '</td>' +
+        '<td>' + escapeHtml(c.createdAt || c.created_at || c.ts || '—') + '</td>' +
+        '<td>' + escapeHtml(c.orderDate || c.order_date || c.date || '—') + '</td>' +
+        '<td>' + ((c.isMostUrgent === true || c.isMostUrgent === 'Yes' || c.isMostUrgent === 'yes' || c.mostUrgent === true || c.mostUrgent === 'Yes') ? 'Yes' : 'No') + '</td>' +
+        '<td>' + escapeHtml(c.cit || (Array.isArray(c.citations) ? c.citations.map(formatCitationEntry).filter(Boolean).join('; ') : '') || '—') + '</td>' +
         '<td>' + c.court + '</td>' +
+        '<td>' + escapeHtml(caseBenchName(c)) + '</td>' +
         '<td>' + explorerCategoryCell(c) + '</td>' +
         '<td>' + party1 + '</td>' +
         '<td>' + party2 + '</td>' +
         '<td>' + c.caseno + '</td>' +
         '<td>' + escapeHtml(c.mk || '—') + '<br>' + escapeHtml(c.tr || '—') + '</td>' +
+        '<td>' + escapeHtml(c.assignedBy || c.assigned_by || '—') + '</td>' +
+        '<td>' + escapeHtml(c.assignedAt || c.assigned_at || '—') + '</td>' +
+        '<td>' + escapeHtml(assignedToLabel(c)) + '</td>' +
         '<td><b>' + escapeHtml(explorerStageLabel(c)) + '</b></td>' +
         '<td class="status-column">' + explorerStatusText(c) + '</td>' +
-        '<td>' + escapeHtml(assignedToLabel(c)) + '</td>' +
+        (showFailureReason ? '<td>' + escapeHtml(c.failureReason || c.failReason || ((state.scope === 'review' ? 'AI flow flagged for manual review at ' : 'AI flow failed at ') + explorerStageLabel(c))) + '</td>' : '') +
         '<td>' + caseDetailsButton(c) + '</td>' +
-        '<td>' + explorerCaseAction(c) + '</td>' +
+        (showAction ? '<td>' + explorerCaseAction(c) + '</td>' : '') +
       '</tr>';
     });
   } else {
-    html += '<tr><td colspan="13" style="text-align:center;padding:30px;color:var(--mu)">No cases match the selected filters.</td></tr>';
+    html += '<tr><td colspan="' + (showFailureReason ? (showAction ? '21' : '20') : (showAction ? '20' : '19')) + '" style="text-align:center;padding:30px;color:var(--mu)">No cases match the selected filters.</td></tr>';
   }
 
   html += '</tbody></table></div>' +
@@ -3983,6 +4046,11 @@ function setJudgeDraft(field, value) {
   c.judgeDraft[field] = value;
 }
 
+function selectManagedJudge(option) {
+  setJudgeDraft('name', option.getAttribute('data-name') || '');
+  render();
+}
+
 function addManagedJudge() {
   const c = state.selectedCase;
   if (!c) return;
@@ -4150,6 +4218,11 @@ function setCounselDraft(field, value) {
   c.counselDraft[field] = value;
 }
 
+function selectManagedCounsel(option) {
+  setCounselDraft('name', option.getAttribute('data-name') || '');
+  render();
+}
+
 function addManagedCounsel() {
   const c = state.selectedCase;
   if (!c) return;
@@ -4260,6 +4333,179 @@ function renderCounselFields(c, readOnly) {
       }).join('') : '<tr><td colspan="4" class="judge-table-empty">No counsel added.</td></tr>') +
     '</tbody></table></div>' +
     '</div>';
+}
+
+function getCitationEntries(c) {
+  if (Array.isArray(c.citations)) return c.citations;
+  c.citations = c.cit ? [{ year: '', volume: '', journal: 'Taxmann', page: '', courtShortForm: 'None', benchType: 'None', value: c.cit }] : [];
+  return c.citations;
+}
+
+function formatCitationEntry(entry) {
+  if (!entry || entry.value) return entry && entry.value ? entry.value : '';
+  const base = [entry.year, entry.volume, entry.journal, entry.page].filter(Boolean).join(' ');
+  const qualifiers = [entry.courtShortForm, entry.benchType]
+    .filter(value => value && value !== 'None')
+    .map(value => '(' + value + ')')
+    .join(' ');
+  return (entry.year ? '[' + entry.year + '] ' : '') +
+    [entry.volume, entry.journal, entry.page].filter(Boolean).join(' ') +
+    (qualifiers ? ' ' + qualifiers : '') ||
+    base;
+}
+
+function syncCitationEntries(c) {
+  c.cit = getCitationEntries(c).map(formatCitationEntry).filter(Boolean).join('; ');
+  if (c.workspaceSaved) c.workspaceSaved.metadata = false;
+}
+
+function addCitation() {
+  const c = state.selectedCase;
+  const draft = c && c.citationDraft;
+  if (!c || !draft || !draft.year || !draft.volume || !draft.journal || !draft.page) {
+    toast('Enter year, volume, journal, and page number.');
+    return;
+  }
+  getCitationEntries(c).push({ year: draft.year, volume: draft.volume, journal: draft.journal, page: draft.page, courtShortForm: draft.courtShortForm, benchType: draft.benchType });
+  c.citationDraft = { year: '', volume: '', journal: 'Taxmann', page: '', courtShortForm: 'None', benchType: 'None' };
+  syncCitationEntries(c);
+  render();
+}
+
+function deleteCitation(index) {
+  const c = state.selectedCase;
+  if (!c) return;
+  getCitationEntries(c).splice(index, 1);
+  syncCitationEntries(c);
+  render();
+}
+
+function editCitation(index) {
+  const c = state.selectedCase;
+  const entry = c && getCitationEntries(c)[index];
+  if (!entry) return;
+  c.citationEditingIndex = index;
+  c.citationEditingDraft = Object.assign({}, entry);
+  render();
+}
+
+function saveCitationEdit() {
+  const c = state.selectedCase;
+  const draft = c && c.citationEditingDraft;
+  if (!c || !draft || !draft.year || !draft.volume || !draft.journal || !draft.page) return toast('Enter year, volume, journal, and page number.');
+  c.citations[c.citationEditingIndex] = { year: draft.year, volume: draft.volume, journal: draft.journal, page: draft.page, courtShortForm: draft.courtShortForm, benchType: draft.benchType };
+  c.citationEditingIndex = null;
+  c.citationEditingDraft = null;
+  syncCitationEntries(c);
+  render();
+}
+
+function cancelCitationEdit() {
+  const c = state.selectedCase;
+  if (!c) return;
+  c.citationEditingIndex = null;
+  c.citationEditingDraft = null;
+  render();
+}
+
+function renderCitationFields(c, readOnly) {
+  const entries = getCitationEntries(c);
+  c.citationDraft = c.citationDraft || { year: '', volume: '', journal: 'Taxmann', page: '', courtShortForm: 'None', benchType: 'None' };
+  const draft = c.citationDraft || { year: '', volume: '', journal: 'Taxmann', page: '', courtShortForm: 'None', benchType: 'None' };
+  return '<div class="form-group full citation-management"><div style="display:flex;align-items:center;justify-content:space-between"><label class="form-label" style="margin:0">Citation</label><label style="display:flex;align-items:center;gap:4px;margin:0;font-size:11px;white-space:nowrap"><input type="checkbox" ' + (c.citationVerified ? 'checked ' : '') + (readOnly ? 'disabled ' : '') + 'onchange="state.selectedCase.citationVerified=this.checked">Is Main</label></div>' +
+    (readOnly ? '' : '<div class="counsel-add-row citation-add-row">' +
+      '<input type="text" placeholder="Year" value="' + escapeHtml(draft.year) + '" oninput="state.selectedCase.citationDraft.year=this.value">' +
+      '<input type="text" placeholder="Volume" value="' + escapeHtml(draft.volume) + '" oninput="state.selectedCase.citationDraft.volume=this.value">' +
+      '<select onchange="state.selectedCase.citationDraft.journal=this.value">' +
+        ['Taxmann', 'All India Cases', 'Centaxonline', 'ITR'].map(j => '<option value="' + j + '"' + (draft.journal === j ? ' selected' : '') + '>' + j + '</option>').join('') +
+      '</select>' +
+      '<input type="number" placeholder="Page number" value="' + escapeHtml(draft.page) + '" oninput="state.selectedCase.citationDraft.page=this.value">' +
+      '<select aria-label="Court short form" onchange="state.selectedCase.citationDraft.courtShortForm=this.value">' +
+        ['SC', 'HC', 'ITAT', 'CESTAT', 'NCLT', 'NCLAT', 'None'].map(option => '<option value="' + option + '"' + ((draft.courtShortForm || 'None') === option ? ' selected' : '') + '>' + option + '</option>').join('') +
+      '</select>' +
+      '<select aria-label="Bench type" onchange="state.selectedCase.citationDraft.benchType=this.value">' +
+        ['FB', 'SB', 'LB', 'None'].map(option => '<option value="' + option + '"' + ((draft.benchType || 'None') === option ? ' selected' : '') + '>' + option + '</option>').join('') +
+      '</select>' +
+      '<button type="button" class="btn p" onclick="addCitation()">Add</button>' +
+    '</div>') +
+    '<div class="judge-table-wrap"><table class="judge-table"><tbody>' +
+      (entries.length ? entries.map((entry, index) => {
+        const editing = c.citationEditingIndex === index && !readOnly;
+        const current = editing ? c.citationEditingDraft : entry;
+        return '<tr><td>' + (editing
+          ? '<div class="citation-add-row" style="display:grid;gap:4px"><input placeholder="Year" value="' + escapeHtml(current.year || '') + '" oninput="state.selectedCase.citationEditingDraft.year=this.value"><input placeholder="Volume" value="' + escapeHtml(current.volume || '') + '" oninput="state.selectedCase.citationEditingDraft.volume=this.value"><select onchange="state.selectedCase.citationEditingDraft.journal=this.value">' + ['Taxmann', 'All India Cases', 'Centaxonline', 'ITR'].map(j => '<option value="' + j + '"' + (current.journal === j ? ' selected' : '') + '>' + j + '</option>').join('') + '</select><input type="number" placeholder="Page number" value="' + escapeHtml(current.page || '') + '" oninput="state.selectedCase.citationEditingDraft.page=this.value"><select aria-label="Court short form" onchange="state.selectedCase.citationEditingDraft.courtShortForm=this.value">' + ['SC', 'HC', 'ITAT', 'CESTAT', 'NCLT', 'NCLAT', 'None'].map(option => '<option value="' + option + '"' + ((current.courtShortForm || 'None') === option ? ' selected' : '') + '>' + option + '</option>').join('') + '</select><select aria-label="Bench type" onchange="state.selectedCase.citationEditingDraft.benchType=this.value">' + ['FB', 'SB', 'LB', 'None'].map(option => '<option value="' + option + '"' + ((current.benchType || 'None') === option ? ' selected' : '') + '>' + option + '</option>').join('') + '</select></div>'
+          : escapeHtml(formatCitationEntry(entry))) + '</td><td>' + (readOnly ? '' : '<div class="judge-table-actions">' + (editing ? '<button type="button" class="btn sm p" onclick="saveCitationEdit()">Save</button><button type="button" class="btn sm" onclick="cancelCitationEdit()">Cancel</button>' : '<button type="button" class="btn sm" onclick="editCitation(' + index + ')">Edit</button><button type="button" class="btn sm" onclick="deleteCitation(' + index + ')">Delete</button>') + '</div>') + '</td></tr>';
+      }).join('') : '<tr><td colspan="2" class="judge-table-empty">No citations added.</td></tr>') +
+    '</tbody></table></div></div>';
+}
+
+function renderAppealNumberFields(c, readOnly) {
+  const entries = Array.isArray(c.appealNumbers)
+    ? c.appealNumbers.map(entry => typeof entry === 'string' ? { year: '', number: entry } : entry)
+    : (c.caseno ? [{ year: '', number: c.caseno }] : []);
+  c.appealNumbers = entries;
+  c.appealNumberYearDraft = c.appealNumberYearDraft || '';
+  c.appealNumberDraft = c.appealNumberDraft || '';
+  const yearDraft = c.appealNumberYearDraft;
+  const draft = c.appealNumberDraft;
+  return '<div class="form-group full"><label class="form-label">Appeal / Petition Number</label>' +
+    (readOnly ? '' : '<div class="counsel-add-row appeal-add-row"><input type="text" placeholder="Appeal / Petition Number" value="' + escapeHtml(draft) + '" oninput="state.selectedCase.appealNumberDraft=this.value"><input type="text" placeholder="Year" value="' + escapeHtml(yearDraft) + '" oninput="state.selectedCase.appealNumberYearDraft=this.value"><button type="button" class="btn p" onclick="addAppealNumber()">Add</button></div>') +
+    '<div class="judge-table-wrap"><table class="judge-table"><tbody>' +
+      (entries.length ? entries.map((entry, index) => {
+        const editing = c.appealEditingIndex === index && !readOnly;
+        return '<tr><td>' + (editing ? '<div style="display:flex;gap:6px"><input type="text" placeholder="Year" value="' + escapeHtml(c.appealEditingDraft.year || '') + '" oninput="state.selectedCase.appealEditingDraft.year=this.value"><input type="text" placeholder="Appeal / Petition Number" value="' + escapeHtml(c.appealEditingDraft.number || '') + '" oninput="state.selectedCase.appealEditingDraft.number=this.value"></div>' : escapeHtml((entry.year ? entry.year + ' ' : '') + entry.number)) + '</td><td>' + (readOnly ? '' : '<div class="judge-table-actions">' + (editing ? '<button type="button" class="btn sm p" onclick="saveAppealNumberEdit()">Save</button><button type="button" class="btn sm" onclick="cancelAppealNumberEdit()">Cancel</button>' : '<button type="button" class="btn sm" onclick="editAppealNumber(' + index + ')">Edit</button><button type="button" class="btn sm" onclick="deleteAppealNumber(' + index + ')">Delete</button>') + '</div>') + '</td></tr>';
+      }).join('') : '<tr><td colspan="2" class="judge-table-empty">No appeal or petition numbers added.</td></tr>') +
+    '</tbody></table></div></div>';
+}
+
+function addAppealNumber() {
+  const c = state.selectedCase;
+  const year = String(c && c.appealNumberYearDraft || '').trim();
+  const value = String(c && c.appealNumberDraft || '').trim();
+  if (!c || !year || !value) return toast('Enter the year and appeal or petition number.');
+  c.appealNumbers = Array.isArray(c.appealNumbers) ? c.appealNumbers.map(entry => typeof entry === 'string' ? { year: '', number: entry } : entry) : (c.caseno ? [{ year: '', number: c.caseno }] : []);
+  c.appealNumbers.push({ year, number: value });
+  c.caseno = c.appealNumbers.map(entry => (entry.year ? entry.year + ' ' : '') + entry.number).join('; ');
+  c.appealNumberYearDraft = '';
+  c.appealNumberDraft = '';
+  render();
+}
+
+function deleteAppealNumber(index) {
+  const c = state.selectedCase;
+  if (!c) return;
+  c.appealNumbers.splice(index, 1);
+  c.caseno = c.appealNumbers.map(entry => (entry.year ? entry.year + ' ' : '') + entry.number).join('; ');
+  render();
+}
+
+function editAppealNumber(index) {
+  const c = state.selectedCase;
+  if (!c || !Array.isArray(c.appealNumbers)) return;
+  c.appealEditingIndex = index;
+  const entry = c.appealNumbers[index];
+  c.appealEditingDraft = typeof entry === 'string' ? { year: '', number: entry } : Object.assign({}, entry);
+  render();
+}
+
+function saveAppealNumberEdit() {
+  const c = state.selectedCase;
+  const year = String(c && c.appealEditingDraft && c.appealEditingDraft.year || '').trim();
+  const value = String(c && c.appealEditingDraft && c.appealEditingDraft.number || '').trim();
+  if (!c || !year || !value) return toast('Enter the year and appeal or petition number.');
+  c.appealNumbers[c.appealEditingIndex] = { year, number: value };
+  c.caseno = c.appealNumbers.map(entry => (entry.year ? entry.year + ' ' : '') + entry.number).join('; ');
+  c.appealEditingIndex = null;
+  c.appealEditingDraft = '';
+  render();
+}
+
+function cancelAppealNumberEdit() {
+  const c = state.selectedCase;
+  if (!c) return;
+  c.appealEditingIndex = null;
+  c.appealEditingDraft = '';
+  render();
 }
 
 function submitManualUpload() {
@@ -4386,6 +4632,26 @@ function viewQcCase(idx) {
   render();
 }
 
+function editQc2Case(idx) {
+  const c = CASES[idx];
+  if (!c || c.qcStatus !== 'QC2 Done') {
+    toast('Only QC2-completed cases can be edited from this action.', 'error');
+    return;
+  }
+  const root = document.getElementById('modal-root');
+  if (!root) return;
+  root.innerHTML = '<div class="modal-ov" onclick="if(event.target===this) closeModal()">' +
+    '<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="qc2-edit-warning-title">' +
+      '<h3 id="qc2-edit-warning-title" style="margin:0 0 8px">Edit QC2 case?</h3>' +
+      '<p style="margin:0;color:var(--mu);font-size:13px;line-height:1.5">QC2 is already done for this case. Do you want to edit it?</p>' +
+      '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px">' +
+        '<button class="btn sm" onclick="closeModal()">Cancel</button>' +
+        '<button class="btn sm p" onclick="closeModal();openCaseWithPdf(' + idx + ')">Edit case</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
 function openQcCaseDocument(idx) {
   const c = CASES[idx];
   if (!isQcDashboardCase(c)) {
@@ -4490,7 +4756,8 @@ function viewCaseMetaData(idx) {
 
 function openCaseWithPdf(idx) {
   const c = CASES[idx];
-  if (isQcDashboardCase(c)) {
+  const isQc2Done = c.qcStatus === 'QC2 Done';
+  if (isQcDashboardCase(c) && !isQc2Done) {
     toast('This file is at the QC stage, Please mark as failed to Update.', 'error');
     return;
   }
@@ -4510,7 +4777,9 @@ function openCaseWithPdf(idx) {
   state.editorSourceMode = false;
   state.editorHtmlSnapshot = '';
   state.wsStep = defaultWorkspaceStep(state.selectedCase);
-  state.pdfSplit = false;
+  state.activePdfDoc = 'court';
+  state.splitRatio = 58;
+  state.pdfSplit = true;
   render();
 }
 
@@ -4579,13 +4848,14 @@ function renderWorkspace() {
       '</div>' +
       '<div class="sp"></div>' +
       '<button class="btn' + (state.trailOpen ? ' accent' : '') + '" onclick="state.trailOpen=!state.trailOpen;render()" aria-expanded="' + !!state.trailOpen + '" title="View AI trail">AI Trail</button>' +
-      '<button class="btn ' + (state.pdfSplit ? 'accent' : '') + '" onclick="state.pdfSplit = !state.pdfSplit; render()" title="Toggle Split Screen PDF Viewer">' +
-        uiIcon('file') + ' ' + (state.pdfSplit ? 'Hide Original PDF' : 'View Original PDF') +
+      '<button class="btn" onclick="openXmlEditor()" title="View and edit XML">XML</button>' +
+      '<button class="btn ' + (state.pdfSplit ? 'accent' : '') + '" onclick="toggleWorkspacePdf()" title="Toggle embedded PDF viewer" aria-expanded="' + !!state.pdfSplit + '">' +
+        uiIcon('file') + ' ' + (state.pdfSplit ? 'Hide PDF' : 'View PDF') +
       '</button>' +
       '<button class="btn" onclick="raiseTicket()" title="Raise a support ticket">Raise Ticket</button>' +
       (state.workspaceViewOnly ? '<span class="badge c">Read-only</span>' : '<button class="btn" onclick="openAssignCase()" title="Assign this case">Assign</button>') +
     '</div>';
-  html += '<div class="split-body" id="split-box">' +
+  html += '<div class="split-body' + (state.pdfSplit ? ' pdf-open' : '') + '" id="split-box">' +
       '<div class="left-pane" id="left-pane" style="' + (state.pdfSplit ? 'width:' + state.splitRatio + '%' : 'width:100%') + '">' +
         '<div class="steps-nav">';
 
@@ -4604,7 +4874,7 @@ function renderWorkspace() {
     const stepDisabled = !unlocked || (state.workspaceReadOnly && i !== 1);
     const canNavigateStep = state.workspaceFinalReadOnly || state.workspaceViewOnly || (!state.workspaceReadOnly && isWorkspaceStepUnlocked(state.selectedCase, i));
     html += '<button class="step-tab ' + (isCur ? 'on' : '') + ' ' + (unlocked ? 'completed' : '') + '"' + (stepDisabled ? ' disabled title="' + (state.workspaceReadOnly && i !== 1 ? 'Read-only metadata view' : lockMessage) + '"' : '') + ' onclick="if(' + canNavigateStep + '){state.wsStep=' + i + ';render()}">' +
-      '<span>' + (i + 1) + '. ' + st.title + '</span> <span>' + (unlocked ? uiIcon('check') : uiIcon('lock')) + '</span>' +
+      '<span>' + st.title + '</span> <span>' + (unlocked ? uiIcon('check') : uiIcon('lock')) + '</span>' +
     '</button>';
   });
 
@@ -4617,8 +4887,7 @@ function renderWorkspace() {
           '<div style="font-size:12px;font-weight:700">' + uiIcon('file') + ' Document Preview</div>' +
           '<div class="pdf-tools">' +
             '<button class="pdf-tool-btn ' + (state.activePdfDoc === 'court' ? 'accent' : '') + '" onclick="state.activePdfDoc=\'court\';render()">Original Court PDF</button>' +
-            '<button class="pdf-tool-btn ' + (state.activePdfDoc === 'taxmann' ? 'accent' : '') + '" onclick="state.activePdfDoc=\'taxmann\';render()">Processed Output PDF</button>' +
-            '<button class="pdf-tool-btn" onclick="openPdfExternal(\'' + (state.activePdfDoc === 'court' ? c.pdfCourt : c.pdfTaxmann) + '\')" title="Open in New Tab">↗</button>' +
+            '<button class="pdf-tool-btn" onclick="toggleWorkspacePdf()" aria-label="Close PDF" title="Close PDF">×</button>' +
           '</div>' +
         '</div>' +
         '<div class="pdf-frame-wrap">' +
@@ -4638,7 +4907,7 @@ function renderWorkspace() {
           const current = aiTrailStage(c) === idx;
           const cls = done ? 'c' : (aiTrailStatus(c) === 'mr' && current) ? 'mr' : current ? aiTrailStatus(c) : 'n';
           const icon = done ? uiIcon('check') : current ? (aiTrailStatus(c) === 'f' ? uiIcon('x') : uiIcon('loader')) : uiIcon('lock');
-          return '<div class="case-trail-item ' + cls + '" title="' + (idx + 1) + '. ' + escapeHtml(stageName) + '">' + icon + '<span>' + (idx + 1) + '. ' + escapeHtml(stageName) + '</span></div>';
+          return '<div class="case-trail-item ' + cls + '" title="' + escapeHtml(stageName) + '">' + icon + '<span>' + escapeHtml(stageName) + '</span></div>';
         }).join('') +
       '</div>' +
     '</aside>';
@@ -4676,9 +4945,7 @@ function renderWorkspaceStepContent(c) {
 
   if (step === 0) {
     return '<div class="card" style="padding:18px">' +
-      '<h2 class="sec-heading">Category</h2>' +
       '<div class="form-grid">' +
-        '<div class="form-group"><label class="form-label">Platform</label>' + renderPlatformPicker(c, fieldsReadOnly) + '</div>' +
         renderCategoryTree(c, fieldsReadOnly) +
       '</div>' +
       (state.workspaceFinalReadOnly || state.workspaceViewOnly ? '' : '<div style="margin-top:18px;display:flex;justify-content:flex-end"><button class="btn' + (c.workspaceSaved && c.workspaceSaved.category ? ' p' : '') + '" onclick="saveWorkspaceStep(\'Category\',1)">' + (c.workspaceSaved && c.workspaceSaved.category ? 'Saved' : 'Save') + '</button></div>') +
@@ -4688,7 +4955,6 @@ function renderWorkspaceStepContent(c) {
   if (step === 1) {
     const benchType = c.bench === 'Division Bench' ? 'Divisional Bench' : c.bench;
     return '<div class="card" style="padding:18px">' +
-      '<h2 class="sec-heading">' + (fieldsReadOnly ? 'Case Meta-Data' : 'Meta-Data') + '</h2>' +
       '<div class="form-grid metadata-form-grid">' +
         '<div class="form-group"><label class="form-label">Party 1</label><input type="text" value="' + escapeHtml(getCaseParties(c).party1) + '" oninput="updateCaseParty(state.selectedCase, \'party1\', this.value)"' + (fieldsReadOnly ? ' readonly' : '') + '></div>' +
         '<div class="form-group"><label class="form-label">Party 2</label><input type="text" value="' + escapeHtml(getCaseParties(c).party2) + '" oninput="updateCaseParty(state.selectedCase, \'party2\', this.value)"' + (fieldsReadOnly ? ' readonly' : '') + '></div>' +
@@ -4726,13 +4992,13 @@ function renderWorkspaceStepContent(c) {
               '</details>') +
         '</div>' +
         '<div class="form-group"><label class="form-label">Judgement Date</label><input type="date" value="' + dateInputValue(c.date) + '" onchange="state.selectedCase.date=this.value"' + (fieldsReadOnly ? ' disabled' : '') + '></div>' +
-        '<div class="form-group"><label class="form-label">Citation</label><input type="text" value="' + escapeHtml(c.cit || '') + '" oninput="state.selectedCase.cit=this.value"' + (fieldsReadOnly ? ' readonly' : '') + '></div>' +
+        renderCitationFields(c, fieldsReadOnly) +
         '<div class="form-group"><label class="form-label">Case Outcome</label><select onchange="state.selectedCase.caseOutcome=this.value"' + (fieldsReadOnly ? ' disabled' : '') + '>' +
           ['Substantive Win', 'Substantive Loss', 'Default / Inaction', 'Preliminary Defect', 'Party Accord', 'Re-hearing'].map(outcome => '<option value="' + outcome + '"' + (getCaseOutcome(c) === outcome ? ' selected' : '') + '>' + outcome + '</option>').join('') +
         '</select></div>' +
         renderJudgeFields(c, fieldsReadOnly) +
         renderCounselFields(c, fieldsReadOnly) +
-        '<div class="form-group"><label class="form-label">Appeal / Petition Number</label><input type="text" value="' + c.caseno + '" oninput="state.selectedCase.caseno=this.value"' + (fieldsReadOnly ? ' readonly' : '') + '></div>' +
+        renderAppealNumberFields(c, fieldsReadOnly) +
       '</div>' +
       (state.workspaceReadOnly || state.workspaceFinalReadOnly || state.workspaceViewOnly ? '' : '<div style="margin-top:18px;display:flex;justify-content:flex-end"><button class="btn' + (c.workspaceSaved && c.workspaceSaved.metadata ? ' p' : '') + '" onclick="saveWorkspaceStep(\'Meta-Data\',2)">' + (c.workspaceSaved && c.workspaceSaved.metadata ? 'Saved' : 'Save') + '</button></div>') +
     '</div>';
@@ -4740,7 +5006,6 @@ function renderWorkspaceStepContent(c) {
 
   if (step === 3) {
     return '<div class="card" style="padding:18px">' +
-      '<h2 class="sec-heading">SLD</h2>' +
       '<div class="form-grid">' +
       '<div class="form-group"><label class="form-label">Marking</label><select onchange="state.selectedCase.sldMarking=this.value"' + (fieldsReadOnly ? ' disabled' : '') + '>' +
         ['BN', 'BNS', 'SBNS', 'BNF', 'None'].map(marking => '<option value="' + marking + '"' + ((c.sldMarking || 'None') === marking ? ' selected' : '') + '>' + marking + '</option>').join('') +
@@ -4754,7 +5019,6 @@ function renderWorkspaceStepContent(c) {
       '<label class="sld-toggle-row"><input type="checkbox" ' + (c.isUpdated ? 'checked ' : '') + (fieldsReadOnly ? 'disabled ' : '') + 'onchange="toggleSldUpdated(this.checked)"><span class="form-label" style="margin:0">is Updated with Date</span></label>' +
       '</div>' +
       (c.isUpdated ? '<div class="sld-date-panel"><div class="form-group"><label class="form-label">Updated date and time</label><input type="datetime-local" value="' + escapeHtml(c.sldUpdatedAt || localDateTimeValue()) + '" oninput="state.selectedCase.sldUpdatedAt=this.value"' + (fieldsReadOnly ? ' disabled' : '') + '></div></div>' : '') +
-      '<div class="form-group" style="margin-bottom:16px"><label class="form-label">Heading</label><input type="text" placeholder="Heading" maxlength="50" value="' + escapeHtml(c.sldHeading || '') + '" oninput="state.selectedCase.sldHeading=this.value.slice(0,50);this.value=state.selectedCase.sldHeading"' + (!c.isTopStory || fieldsReadOnly ? ' disabled' : '') + '></div>' +
       '<div class="form-group"><label class="form-label">' + uiIcon('imagePlus') + ' Image</label><div class="sld-image-row"><div class="sld-image-controls"><input type="file" accept="image/*" onchange="handleSldImageSelected(this)"' + (fieldsReadOnly ? ' disabled' : '') + '><button class="btn" style="margin-top:10px" onclick="generateSldImage()"' + (fieldsReadOnly ? ' disabled' : '') + '>AI Image Genaeration</button></div><div class="sld-image-preview">' +
       (c.sldImage ? '<img src="' + c.sldImage + '" alt="SLD image preview">' : 'Image preview') +
       '</div></div></div>' +
@@ -4801,11 +5065,16 @@ function renderWorkspaceStepContent(c) {
     const editorReadOnly = state.workspaceHtmlReadOnly || state.workspaceFinalReadOnly || state.workspaceViewOnly;
     let docHtml = '';
     docHtml = `
+        ${c.isTopStory ? `
+        <section class="taxmann-document-section">
+          <h2>SLD</h2>
+          <p>Taxmann brings you the key highlights of this important judgment, with practical insights for legal and tax professionals.</p>
+        </section>
+        ` : ''}
         <section class="taxmann-document-section">
           <h2>TLD</h2>
           <div class="taxmann-headline">INCOME TAX: Where assessee in civil contract business claimed a Rs. 10 crore bank credit was an accommodation entry for a friend and sought review of sustained addition under section 68 relying on sale deeds and a Tribunal order, since these documents were available in public records earlier and due diligence was not established, review application was liable to be dismissed.</div>
         </section>
-        <div class="taxmann-sep">■ ■ ■</div>
         <section class="taxmann-document-section">
           <h2>Meta Data</h2>
           <div class="taxmann-header-block">
@@ -4888,7 +5157,7 @@ function renderWorkspaceStepContent(c) {
     docHtml = addEditorComponentControls(docHtml, !editorReadOnly);
 
     return '<div class="taxmann-editor-container' + (editorReadOnly ? ' read-only' : '') + '">' +
-      (editorReadOnly ? '' : '<div class="taxmann-toolbar">' +
+      (editorReadOnly ? '' : '<template id="taxmann-toolbar-template"><div class="taxmann-toolbar">' +
         '<button class="t-tool-btn" onclick="execEd(\'bold\')" title="Bold"><b>B</b></button>' +
         '<button class="t-tool-btn" onclick="execEd(\'italic\')" title="Italic"><i>I</i></button>' +
         '<button class="t-tool-btn" onclick="execEd(\'underline\')" title="Underline"><u>U</u></button>' +
@@ -4915,20 +5184,16 @@ function renderWorkspaceStepContent(c) {
         '<div class="t-tool-select" onclick="toast(\'Highlight color selector\')" title="Highlight Color">' + uiIcon('pen') + '<span>▾</span></div>' +
         '<div class="sp"></div>' +
         '<button class="t-tool-btn" id="xml-source-toggle" onclick="toggleSourceXml()" title="View Source XML">&lt;&gt;</button>' +
-        '<button class="t-tool-btn" onclick="previewCaseLaw()" title="Preview case law">' + uiIcon('eye') + '</button>' +
-      '</div>') +
+        '<button class="t-tool-btn" id="case-preview-toggle" onclick="previewCaseLaw()" title="Preview case law">' + uiIcon('eye') + '</button>' +
+      '</div></template>') +
 
       '<div class="taxmann-editor-box">' +
         '<div class="taxmann-editor-content" id="taxmann-editor" contenteditable="false" spellcheck="false">' +
           docHtml +
         '</div>' +
       '</div>' +
-
-      '<div class="taxmann-editor-footer" style="padding:10px 16px;background:#f9fafb;border-top:1px solid #e5e7eb;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center">' +
-        '<div style="font-size:11.5px;color:var(--mu)">' + (editorReadOnly ? 'Editor · Read-only view' : 'Editor · Taxmann Legal Standard') + '</div>' +
-        (editorReadOnly ? '' : '<div style="display:flex;gap:8px">' +
-          '<button class="btn sm' + (c.workspaceSaved && c.workspaceSaved.editor ? ' p' : '') + '" onclick="saveEditor()">' + (c.workspaceSaved && c.workspaceSaved.editor ? 'Saved' : 'Save') + '</button>' +
-        '</div>') +
+      '<div class="taxmann-editor-footer" style="flex:0 0 auto;padding:10px 16px;background:#f9fafb;border-top:1px solid #e5e7eb;border-radius:0 0 8px 8px;font-size:11.5px;color:var(--mu)">' +
+        (editorReadOnly ? 'Editor · Read-only view' : 'Editor · Taxmann Legal Standard') +
       '</div>' +
     '</div>';
   }
@@ -4939,7 +5204,7 @@ function addEditorComponentControls(html, editable) {
   return html.replace(/<h2>([\s\S]*?)<\/h2>/gi, (heading, title) => {
     if (title.includes('editor-component-edit')) return heading;
     const label = title.replace(/<[^>]*>/g, '').trim();
-    const editAction = /^meta\s*data$/i.test(label) ? 'editCaseMetadataFromEditor()' : 'toggleEditorComponent(this)';
+    const editAction = /^meta\s*data$/i.test(label) ? 'editCaseMetadataFromEditor()' : 'openEditorComponent(this)';
     return '<h2>' + title + '<button type="button" class="editor-component-edit" onclick="' + editAction + '" aria-label="Edit ' + escapeHtml(label) + '" aria-pressed="false" title="Edit ' + escapeHtml(label) + '">' + uiIcon('pencil', 13) + '</button></h2>';
   });
 }
@@ -4950,19 +5215,239 @@ function editCaseMetadataFromEditor() {
   render();
 }
 
-function toggleEditorComponent(button) {
+function openEditorComponent(button) {
+  const editor = document.getElementById('taxmann-editor');
   const section = button.closest('.taxmann-document-section');
-  if (!section) return;
-  const isEditing = button.getAttribute('aria-pressed') === 'true';
-  Array.from(section.children).forEach(child => {
-    if (child.tagName === 'H2') return;
-    child.contentEditable = isEditing ? 'false' : 'true';
-    child.classList.toggle('component-editing', !isEditing);
-  });
-  button.setAttribute('aria-pressed', String(!isEditing));
-  button.title = isEditing ? 'Edit component' : 'Finish editing component';
-  button.setAttribute('aria-label', isEditing ? 'Edit component' : 'Finish editing component');
-  button.innerHTML = uiIcon(isEditing ? 'pencil' : 'check', 13);
+  const toolbarTemplate = document.getElementById('taxmann-toolbar-template');
+  const root = document.getElementById('modal-root');
+  if (!editor || !section || !toolbarTemplate || !root) return;
+  const sections = Array.from(editor.querySelectorAll('.taxmann-document-section'));
+  state.editorComponentIndex = sections.indexOf(section);
+  if (state.editorComponentIndex < 0) return;
+  const heading = section.querySelector(':scope > h2');
+  const title = heading ? heading.textContent.replace(/\s+/g, ' ').trim() : 'Document section';
+  const content = Array.from(section.children).filter(child => child !== heading).map(child => child.outerHTML).join('');
+  const toolbarContainer = document.createElement('div');
+  toolbarContainer.innerHTML = toolbarTemplate.innerHTML;
+  const toolbar = toolbarContainer.firstElementChild;
+  if (!toolbar) return;
+  const sourceToggle = toolbar.querySelector('#xml-source-toggle');
+  const previewToggle = toolbar.querySelector('#case-preview-toggle');
+  if (sourceToggle) sourceToggle.remove();
+  if (previewToggle) previewToggle.remove();
+  const hasRelations = /^(case review|cases referred to)$/i.test(title);
+  const relationTable = hasRelations ? buildRelationTableEditor() : '';
+  root.innerHTML = '<div class="modal-ov component-editor-overlay" onclick="if(event.target===this) closeEditorComponent(false)">' +
+    '<div class="modal-box component-editor-modal" role="dialog" aria-modal="true" aria-label="Edit ' + escapeHtml(title) + '">' +
+      '<div class="case-preview-header"><strong>Edit ' + escapeHtml(title) + '</strong><div style="display:flex;gap:8px">' + (hasRelations ? '<button type="button" class="btn p" id="editor-text-view-toggle" onclick="switchEditorComponentView(\'text\')">Text</button><button type="button" class="btn" id="editor-association-view-toggle" onclick="switchEditorComponentView(\'associations\')">Association Table</button>' : '') + '<button type="button" class="btn" onclick="regenerateEditorComponent()">AI Regenerate</button><button type="button" class="btn p" onclick="saveEditorComponent()">Save</button><button type="button" class="btn sm" onclick="closeEditorComponent(false)" aria-label="Cancel editing">Cancel</button></div></div>' +
+      '<div class="component-editor-body">' +
+        toolbar.outerHTML +
+        '<div class="case-preview-content component-editor-content" id="editor-component-content" contenteditable="true" spellcheck="false">' + content + '</div>' +
+        relationTable +
+      '</div>' +
+    '</div>' +
+  '</div>';
+  syncEditorComponentModalBounds();
+  const activeToolbar = root.querySelector('.component-editor-body .taxmann-toolbar');
+  if (activeToolbar) {
+    activeToolbar.addEventListener('mousedown', event => {
+      if (event.target.closest('button, .t-tool-select')) event.preventDefault();
+    });
+  }
+  switchEditorComponentView('text');
+  const contentEditor = document.getElementById('editor-component-content');
+  if (contentEditor) contentEditor.focus();
+}
+
+function buildRelationTableEditor() {
+  const relations = ['Refers to', 'Follows', 'Distinguishes', 'Affirms', 'Reverses', 'Modifies', 'Sets Aside', 'Overrules', 'Partly Affirms', 'Partly Reverses', 'Partly Overrules', 'Remands', 'Approves', 'Disapproves', 'SLP Granted', 'SLP Dismissed'];
+  return '<div class="relation-table-editor" id="relation-table-editor" hidden><div class="table-wrap"><table><thead><tr><th>Citation</th><th>Document ID</th><th>Relation</th><th></th></tr></thead><tbody id="relation-input-rows">' +
+    relationInputRow(relations, true) +
+    '</tbody></table></div></div>';
+}
+
+function relationInputRow(relations, isEntry) {
+  const action = isEntry ? '<button type="button" class="btn sm" onclick="addRelationInputRow(this)" aria-label="Add association">Add</button>' : '<button type="button" class="btn sm" onclick="this.closest(\'tr\').remove()" aria-label="Remove association">Remove</button>';
+  return '<tr><td><input class="form-control relation-citation" type="text" placeholder="Citation"></td><td><input class="form-control relation-document-id" type="text" placeholder="Document ID"></td><td><select class="form-control relation-type">' + relations.map(relation => '<option>' + relation + '</option>').join('') + '</select></td><td>' + action + '</td></tr>';
+}
+
+function addRelationInputRow(button) {
+  const rows = document.getElementById('relation-input-rows');
+  if (!rows) return;
+  if (button) {
+    const row = button.closest('tr');
+    if (!row.querySelector('.relation-citation').value.trim() && !row.querySelector('.relation-document-id').value.trim()) return;
+    button.textContent = 'Remove';
+    button.setAttribute('aria-label', 'Remove association');
+    button.onclick = function() { row.remove(); };
+  }
+  const relations = ['Refers to', 'Follows', 'Distinguishes', 'Affirms', 'Reverses', 'Modifies', 'Sets Aside', 'Overrules', 'Partly Affirms', 'Partly Reverses', 'Partly Overrules', 'Remands', 'Approves', 'Disapproves', 'SLP Granted', 'SLP Dismissed'];
+  rows.insertAdjacentHTML('beforeend', relationInputRow(relations, true));
+}
+
+function switchEditorComponentView(view) {
+  const content = document.getElementById('editor-component-content');
+  const associations = document.getElementById('relation-table-editor');
+  const toolbar = document.querySelector('#modal-root .component-editor-body .taxmann-toolbar');
+  const textButton = document.getElementById('editor-text-view-toggle');
+  const associationButton = document.getElementById('editor-association-view-toggle');
+  if (!content || !associations) return;
+  const showAssociations = view === 'associations';
+  content.hidden = showAssociations;
+  associations.hidden = !showAssociations;
+  if (toolbar) {
+    toolbar.hidden = showAssociations;
+    toolbar.style.display = showAssociations ? 'none' : '';
+  }
+  if (textButton) textButton.classList.toggle('p', !showAssociations);
+  if (associationButton) associationButton.classList.toggle('p', showAssociations);
+}
+
+function relationTableHtml() {
+  const rows = Array.from(document.querySelectorAll('#relation-input-rows tr')).map(row => {
+    const citation = row.querySelector('.relation-citation').value.trim();
+    const documentId = row.querySelector('.relation-document-id').value.trim();
+    const relation = row.querySelector('.relation-type').value;
+    return citation || documentId ? '<tr><td>' + escapeHtml(citation) + '</td><td>' + escapeHtml(documentId) + '</td><td>' + escapeHtml(relation) + '</td><td><button type="button" class="btn sm" onclick="this.closest(\'tr\').remove()" aria-label="Delete association">Delete</button></td></tr>' : '';
+  }).filter(Boolean);
+  return rows.length ? '<table class="relation-reference-table"><thead><tr><th>Citation</th><th>Document ID</th><th>Relation</th><th></th></tr></thead><tbody>' + rows.join('') + '</tbody></table>' : '';
+}
+
+function regenerateEditorComponent() {
+  const contentEditor = document.getElementById('editor-component-content');
+  if (!contentEditor) return;
+  const title = document.querySelector('#modal-root .component-editor-modal strong');
+  const sectionName = title ? title.textContent.replace(/^Edit\s+/i, '').trim() : 'document section';
+  contentEditor.innerHTML = '<p><b>AI regenerated locally.</b></p><p>This ' + escapeHtml(sectionName.toLowerCase()) + ' has been regenerated from the current case record for editorial review.</p>';
+  contentEditor.focus();
+  toast('AI regenerated ' + sectionName + ' locally.');
+}
+
+function syncEditorComponentModalBounds() {
+  const overlay = document.querySelector('#modal-root .component-editor-overlay');
+  if (!overlay) return;
+  const editorPane = document.getElementById('left-pane');
+  if (!editorPane) {
+    closeEditorComponent(false);
+    return;
+  }
+  const bounds = editorPane.getBoundingClientRect();
+  overlay.style.left = bounds.left + 'px';
+  overlay.style.top = bounds.top + 'px';
+  overlay.style.width = bounds.width + 'px';
+  overlay.style.height = bounds.height + 'px';
+}
+
+function closeEditorComponent(applyChanges) {
+  const root = document.getElementById('modal-root');
+  if (!root) return;
+  if (applyChanges && Number.isInteger(state.editorComponentIndex)) {
+    const editor = document.getElementById('taxmann-editor');
+    const section = editor && editor.querySelectorAll('.taxmann-document-section')[state.editorComponentIndex];
+    const content = document.getElementById('editor-component-content');
+    const heading = section && section.querySelector(':scope > h2');
+    if (section && content && heading) {
+      const relationTable = document.getElementById('relation-input-rows') ? relationTableHtml() : '';
+      section.innerHTML = heading.outerHTML + relationTable + content.innerHTML;
+      state.selectedCase.workspaceSaved = state.selectedCase.workspaceSaved || {};
+      state.selectedCase.workspaceSaved.editor = false;
+    }
+  }
+  state.editorComponentIndex = null;
+  root.innerHTML = '';
+}
+
+function saveEditorComponent() {
+  if (!state.selectedCase || state.workspaceViewOnly) return;
+  closeEditorComponent(true);
+  saveEditor();
+}
+
+window.addEventListener('resize', syncEditorComponentModalBounds);
+
+function openXmlEditor() {
+  const c = state.selectedCase;
+  const root = document.getElementById('modal-root');
+  if (!c || !root) return;
+  const readOnly = !!(state.workspaceViewOnly || state.workspaceFinalReadOnly);
+  state.xmlEditorPrevious = c.xmlOverride || generateFinalXML(c);
+  root.innerHTML = '<div class="modal-ov component-editor-overlay" onclick="if(event.target===this) closeModal()">' +
+    '<div class="modal-box component-editor-modal xml-workspace-modal" role="dialog" aria-modal="true" aria-label="XML View">' +
+      '<div class="xml-workspace">' +
+        '<div class="xml-workspace-header"><h2>XML View</h2><span style="font-size:11px;color:var(--mu)">' + (readOnly ? 'Read-only' : 'Editable') + '</span><span style="flex:1"></span>' +
+          (readOnly ? '' : '<button type="button" class="btn p" onclick="saveXmlEditor()">Save</button>') +
+          '<button type="button" class="btn sm" onclick="closeModal()" aria-label="Close XML">' + (readOnly ? 'Close' : 'Cancel') + '</button>' +
+        '</div>' +
+        '<div class="xml-workspace-tools">' +
+          '<button type="button" class="btn sm" onclick="adjustXmlFontSize(1)" aria-label="Increase XML font size" title="Zoom in">⊕</button>' +
+          '<button type="button" class="btn sm" onclick="adjustXmlFontSize(-1)" aria-label="Decrease XML font size" title="Zoom out">⊖</button>' +
+          '<button type="button" class="btn sm" onclick="beautifyXmlEditor()">Beautify</button>' +
+          '<label><input id="xml-word-wrap" type="checkbox" onchange="toggleXmlWordWrap(this.checked)"> Word Wrap</label>' +
+          '<button type="button" class="btn sm" onclick="restoreXmlEditor()">Restore Previous version of XML</button>' +
+        '</div>' +
+        '<div class="xml-code-wrap"><pre id="xml-line-numbers" class="xml-line-numbers" aria-hidden="true"></pre>' +
+          '<textarea id="xml-editor-text" class="xml-code-editor" spellcheck="false"' + (readOnly ? ' readonly' : '') + ' oninput="syncXmlLineNumbers()" onscroll="syncXmlLineNumbers()">' + escapeHtml(generateFinalXML(c)) + '</textarea>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+  syncEditorComponentModalBounds();
+  syncXmlLineNumbers();
+}
+
+function syncXmlLineNumbers() {
+  const area = document.getElementById('xml-editor-text');
+  const numbers = document.getElementById('xml-line-numbers');
+  if (!area || !numbers) return;
+  numbers.textContent = Array.from({ length: Math.max(1, area.value.split('\n').length) }, (_, index) => index + 1).join('\n');
+  numbers.scrollTop = area.scrollTop;
+}
+
+function adjustXmlFontSize(delta) {
+  const area = document.getElementById('xml-editor-text');
+  if (!area) return;
+  const current = parseFloat(getComputedStyle(area).fontSize) || 12;
+  area.style.fontSize = Math.max(10, Math.min(20, current + delta)) + 'px';
+}
+
+function toggleXmlWordWrap(enabled) {
+  const area = document.getElementById('xml-editor-text');
+  if (area) area.classList.toggle('wrap', enabled);
+}
+
+function beautifyXmlEditor() {
+  const area = document.getElementById('xml-editor-text');
+  if (!area) return;
+  const xml = area.value.replace(/>\s*</g, '><').trim();
+  let depth = 0;
+  area.value = xml.replace(/(<[^>]+>)/g, '\n$1').split('\n').filter(Boolean).map(token => {
+    if (/^<\//.test(token)) depth = Math.max(0, depth - 1);
+    const line = '  '.repeat(depth) + token;
+    if (/^<[^!?/][^>]*[^/]>\s*$/.test(token) && !/<\/[^>]+>$/.test(token)) depth++;
+    return line;
+  }).join('\n').trim();
+  syncXmlLineNumbers();
+}
+
+function restoreXmlEditor() {
+  const area = document.getElementById('xml-editor-text');
+  if (!area || state.xmlEditorPrevious == null) return;
+  area.value = state.xmlEditorPrevious;
+  syncXmlLineNumbers();
+}
+
+function saveXmlEditor() {
+  const c = state.selectedCase;
+  const area = document.getElementById('xml-editor-text');
+  if (!c || !area) return;
+  const parsed = new DOMParser().parseFromString(area.value, 'application/xml');
+  if (parsed.getElementsByTagName('parsererror').length) {
+    toast('XML is not well-formed. Fix the errors and save again.', 'error');
+    return;
+  }
+  c.xmlOverride = area.value;
+  closeModal();
+  toast('XML saved');
 }
 
 function previewCaseLaw() {
@@ -5012,6 +5497,7 @@ function toggleSourceXml() {
 const SAMPLE_EDITOR_XML = "\u003c?xml version=\"1.0\" encoding=\"utf-8\"?\u003e\u003c?xml-stylesheet type=\"text/xsl\" href=\"caselaw.xsl\"?\u003e\r\n\u003cdocument id=\"101510000000083065\"\u003e\r\n\t\u003cheader\u003e\r\n\t\t\u003cdb_categories\u003e\r\n\t\t\t\u003cdb_parentcategory id=\"111050000000000002\" name=\"DIRECT TAX LAWS\"\u003e\r\n\t\t\t\t\u003cdb_category id=\"111050000000009187\" name=\"DIRECT TAX LAWS\"/\u003e\r\n\t\t\t\u003c/db_parentcategory\u003e\r\n\t\t\u003c/db_categories\u003e\r\n\t\t\u003cdb_groups\u003e\r\n\t\t\t\u003cdb_group id=\"111050000000000060\" name=\"CASELAWS\"/\u003e\r\n\t\t\u003c/db_groups\u003e\r\n\t\t\u003cdb_internationaltaxation\u003e\r\n\t\t\t\u003cdb_subjects/\u003e\r\n\t\t\t\u003cdb_articles/\u003e\r\n\t\t\t\u003cdb_countries/\u003e\r\n\t\t\u003c/db_internationaltaxation\u003e\r\n\t\t\u003cdb_createdate\u003e1/17/2013 4:06:13 PM\u003c/db_createdate\u003e\r\n\t\t\u003cdb_updatedate\u003e1/17/2013 8:55:28 PM\u003c/db_updatedate\u003e\r\n\t\t\u003cdb_slp id=\"\"/\u003e\r\n\t\t\u003cdb_citation year=\"2013\" volume=\"29\" journal=\"taxmann.com\" pageno=\"78\" bench=\"Mumbai\" sbtm=\"\" magothertype=\"\"/\u003e\r\n\t\t\u003cdb_crosspondingcitation/\u003e\r\n\t\t\u003cdb_court id=\"111070000000000011\" prebench=\"IN THE \" postbench=\" MUMBAI BENCH \u0027I\u0027\"\u003eITAT\u003c/db_court\u003e\r\n\t\t\u003cdbs_party1 id=\"\"\u003eIndorama Software Solution Ltd.\u003c/dbs_party1\u003e\r\n\t\t\u003cdbs_party2 id=\"\"\u003eIncome-tax Officer, Ward 9(2)-1, Mumbai\u003clink type=\"foot\" display=\"normal\" id=\"rfn1\" href=\"#fn1\"\u003e*\u003c/link\u003e\r\n\t\t\u003c/dbs_party2\u003e\r\n\t\t\u003cdbs_judge\u003e\r\n\t\t\t\u003cdb_judgename id=\"111170000000056962\"\u003eVIJAY PAL RAO\u003c/db_judgename\u003e, JUDICIAL MEMBER AND        \u003cdb_judgename id=\"111170000000033654\"\u003eN.K. BILLAIYA\u003c/db_judgename\u003e, ACCOUNTANT MEMBER     \u003c/dbs_judge\u003e\r\n\t\t\u003cdbs_appeal AY=\"ASSESSMENT YEAR 2003-04\"\u003eIT APPEAL NOS. 5211 AND 5290 (MUM.) OF 2011\u003c/dbs_appeal\u003e\r\n\t\t\u003cdb_orderdate yyyy=\"2012\" mm=\"9\" dd=\"7\"/\u003e\r\n\t\t\u003cdbs_summary\u003e\r\n\t\t\t\u003cpara class=\"threedigest\"\u003eIT : Where notice under section 148 was issued by Assessing Officer who was not vested with jurisdiction over assessee, same was patently illegal and void and, thus, reassessment proceedings initiated in pursuance of said notice were liable to be set aside\u003c/para\u003e\r\n\t\t\u003c/dbs_summary\u003e\r\n\t\u003c/header\u003e\r\n\t\u003cbody\u003e\r\n\t\t\u003cdigest\u003e\r\n\t\t\t\u003cheadnotes\u003e\r\n\t\t\t\t\u003cheadnote id=\"\"\u003eSection \u003cdbs_section id=\"111210000000000444\"\u003e148\u003c/dbs_section\u003e, read with section \u003cdbs_section id=\"111210000000000315\"\u003e120\u003c/dbs_section\u003e, of the \u003cdbs_act id=\"102010000000000337\"\u003eIncome-tax Act, 1961\u003c/dbs_act\u003e - \u003cdb_heading id=\"111130000000006614\"\u003eIncome escaping  assessment\u003c/db_heading\u003e - \u003cdb_subheading id=\"111130000000006640\"\u003eIssue of notice for\u003c/db_subheading\u003e - Jurisdiction of Assessing Officer -  Assessment year \u003cdb_asstyear id=\"101140000000067868\"\u003e2003-04\u003c/db_asstyear\u003e  - Whether notice under section 148 is required to be issued by Assessing Officer who is vested with jurisdiction over assessee on basis of criteria of territorial area, or classes of persons, or classes of incomes as enumerated in sub-section (3) of section 120 - Held, yes - Whether, therefore, where notice under section 148 was issued by Assessing Officer who was not vested with jurisdiction over assessee on basis of any of aforesaid criteria, same was patently illegal and void and, thus, reassessment proceedings in pursuance of said notice were liable to be set aside - Held, yes [Para 11] [In favour of assessee] \u003c/headnote\u003e\r\n\t\t\t\u003c/headnotes\u003e\r\n\t\t\t\u003ctext\u003e\r\n\t\t\t\t\u003cpara class=\"fact\"\u003eFACTS\u003c/para\u003e\r\n\t\t\t\t\u003clist level=\"1\" type=\"none\"\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eFor the relevant assessment year, assessment was completed under section 143(3) wherein assessee\u0027s claim for set off of unabsorbed losses was accepted.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eSubsequently, the Assessing Officer initiated reassessment proceedings by issuing a notice under section 148.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eThe assessee challenged validity of reassessment proceedings on the ground that due to change of address of assessee, the Assessing Officer who issued notice under section 148 did not have jurisdiction to issue said notice and, thus, notice so issued was invalid.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eThe Assessing Officer did not dispute the fact that the Assessing Officer who had issued notice under section 148 was not having any jurisdiction over the assessee. However, the objection of the assessee was rejected on the reasoning that when the final decision in respect of reassessment proceedings had been taken by the Assessing Officer who was having the jurisdiction, then, there was no violation of provisions of law.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eThe Commissioner (Appeals) upheld the order of Assessing Officer.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eOn second appeal:\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\u003c/list\u003e\r\n\t\t\t\t\u003cpara class=\"fact\"\u003eHELD\u003c/para\u003e\r\n\t\t\t\t\u003clist level=\"1\" type=\"none\"\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\t\t\u003ci\u003eThe notice under section 148 is required to be issued by the Assessing Officer who is vested with the jurisdiction over the assessee on the basis of the criteria of territorial area, a person or classes of persons, income or classes of incomes and cases or classes of cases as enumerated in sub-section \u003c/i\u003e( \u003ci\u003e3\u003c/i\u003e)\u003ci\u003e of section 120. It is not the case of the revenue that the Assessing Officer who has issued the notice under section 148 was vested with the jurisdiction by virtue of any direction or orders issued under sub-section (1) or (2) of section 120.\u003c/i\u003e\r\n\t\t\t\t\t\t\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e• \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\t\t\u003ci\u003eWhen it is apparent that the notice under section 148 was issued by the Assessing Officer who was not vested with the jurisdiction over the assessee then, the same was patently illegal and void. Consequently, the reassessment proceedings and order in pursuant to the illegal notice under section 148 are also \u003c/i\u003evoid ab initio\u003ci\u003e and liable to be set aside. [Para 11]\u003c/i\u003e\r\n\t\t\t\t\t\t\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\u003c/list\u003e\r\n\t\t\t\u003c/text\u003e\r\n\t\t\t\u003cdbs_casereffered\u003e \u003c/dbs_casereffered\u003e\r\n\t\t\t\u003cdbs_members\u003e\r\n\t\t\t\t\u003cdb_counsela id=\"111170000000058330\"\u003eN.H. Gajria\u003c/db_counsela\u003e\r\n\t\t\t\t\u003ci\u003e for the Appellant. \u003c/i\u003e\r\n\t\t\t\t\u003cdb_counselr id=\"111170000000021218\"\u003eK.G. Kutty\u003c/db_counselr\u003e\r\n\t\t\t\t\u003ci\u003e for the Respondent.\u003c/i\u003e\r\n\t\t\t\u003c/dbs_members\u003e\r\n\t\t\u003c/digest\u003e\r\n\t\t\u003ccaseOrder\u003e\r\n\t\t\t\u003corder\u003e\r\n\t\t\t\t\u003cpara class=\"fact\"\u003eORDER\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003eVijay Pal Rao, Judicial Member - \u003c/b\u003eThese cross appeals are directed against the order dated 23.5.2011 of CIT (A) for the assessment year 2003-2004.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e2.\u003c/b\u003e The assessee filed return of income declaring income at Rs. NIL after setting off un-absorbed losses of Rs. 7,74,956/-. The assessment was completed u/s 143(3) resulting NIL income after allowing the set off unabsorbed losses of the earlier years. Subsequently, a notice u/s 148 was issued on 31.3.2010 on the reason that there was a change in the shareholding in the previous year in the case of the assessee which is more than 99% of the shareholding of the company and, therefore, as per section 79, the losses incurred in any previous year prior to the previous year shall not be carry forward and set off against the income of the previous year in which there is a change in the shareholding of more than 51%. The assessee raised an objection of validation of notice issued u/s 148 \u003ci\u003einter alia\u003c/i\u003e on the ground that the Assessing Officer who has issued the notice u/s 148 was not having jurisdiction over the assessee. The Assessing Officer who has completed the re-assessment did not accept the contention and objection of the assessee and completed the re-assessment vide order dated 22.11.2010. On appeal, the CIT (A) though rejected the objection raised by the assessee on the validity of the notice issued u/s 148, however allowed the claim of the assessee of carried forward and setting off the losses of the earlier years\u0027. Thus, both the assessee as well as the Revenue are aggrieved by the impugned order of CIT (A) and filed respective appeals.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e3.\u003c/b\u003e The assessee has raised the following grounds in its appeal:\u003c/para\u003e\r\n\t\t\t\t\u003clist level=\"1\" type=\"none\"\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e\"1. \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eOn the facts and circumstances of the case, the CIT (A) has erred in confirming the reopening of the assessment proceedings u/s 148 of the Act as a valid proceedings, though the notice u/s 148 of the Act was issued by the Assessing Officer who did not hold the territorial jurisdiction over the appellant.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e2. \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eOn the facts and circumstances of the case, the CIT (A) has erred in confirming the reopening of the assessment proceedings u/s 148 of the Act as a valid proceedings beyond the period of 4 years though the subject matter had come to the knowledge of the Assessing Officer with a period of four years.\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\t\u003cli\u003e\r\n\t\t\t\t\t\t\u003clabel\u003e3. \u003c/label\u003e\r\n\t\t\t\t\t\t\u003cpara\u003eOn the facts and circumstances of the case, the CIT (A) has erred in confirming the reopening of the assessment proceedings u/s 148 of the Act as a valid proceedings in spite of change of opinion between the two Assessing Officers.\"\u003c/para\u003e\r\n\t\t\t\t\t\u003c/li\u003e\r\n\t\t\t\t\u003c/list\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e4.\u003c/b\u003e The Revenue has raised the only effective ground as under:\u003c/para\u003e\r\n\t\t\t\t\u003cpara class=\"quote\"\u003e\"On the facts and in the circumstances of the case and in law, the Ld. CIT (A) erred in allowing the assessee to set off its earlier losses holding that section 79 of the IT Act, 1961 does not apply in the assessee\u0027s case without appreciating the provisions of section 79 and that the Law does not envisage mere application of Share Application Money as Share Capital.\"\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e5.\u003c/b\u003e First, we take up the appeal of the assessee as the issue of validity of notice u/s 148 has been raised which goes to the root of the matter. As evident from the ground raised by the assessee, the assessee has challenged the reopening on three grounds viz. (\u003ci\u003ei\u003c/i\u003e) The AO who has issued the notice u/s 148 was lacking the jurisdiction over the assessee (\u003ci\u003eii\u003c/i\u003e) The reopening is beyond the period of four years, therefore, in the absence of failure on the part of the assessee to disclose fully and truly all relevant material necessary for assessment, the reopening is barred and hit by the proviso to section 147 and (\u003ci\u003eiii\u003c/i\u003e ) The reopening is based on change of opinion between the two Assessing Officers. As regards the first objection against the validity of reopening, the learned AR of the assessee has submitted that the original assessment made u/s 143(3) on 28.9.2005 by the ITO, Ward-10(3)-4, Mumbai. Thereafter, the address of the company was changed and consequently, the jurisdiction of the Assessing Officer was also changed. Accordingly, the case papers were transferred to the ITO, Ward-9(2)-1, Mumbai. The learned AR of the assessee has further submitted that the assessment of the assessee for the assessment year 2007-2008 was made u/s 143(3) of the Income Tax Act by the ITO, Ward-9(2)-1, Mumbai on 27.11.2009, whereas, the notice u/s 148 for the assessment year under consideration was issued on 31.3.2010 by the ITO, Ward-10(3)-4 who had already transferred the case papers to the ITO and, therefore, was having no jurisdiction over the assessee. Thus, the learned AR has submitted that the notice issued u/s 148 is invalid as was issued by the ITO who was not having the jurisdiction over the assessee\u0027s case.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e6.\u003c/b\u003e On the other hand, the learned DR has submitted that when the AO as well as the CIT (A) has already dealt with the issue of validity of notice issued u/s 148 on the ground of jurisdiction, then, there is no merit in the objection of the assessee. He has further submitted that when the assessment has been concluded by the ITO, Ward-9(2)-1 who has administrative jurisdiction on the assessee, then, the objection of jurisdiction raised by the assessee is not tenable. He has relied upon the order of the CIT (A) and Assessing Officer on this point.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e7.\u003c/b\u003e We have considered the rival submissions as well as the relevant material on record. There is no dispute on the point that the original assessment was completed by the ITO, Ward-10(3)-4, Mumbai and, thereafter due to change of the address of the assessee, the jurisdiction of the Assessing Officer was also changed from ITO, Ward-10(3)-4 to ITO, Ward-9(2)-1. After completion of the assessment u/s 143(3) for the year under consideration, the assessment for the assessment year 2007-2008 was completed u/s 143(3) by the ITO, Ward-9(2)-1 on 27.11.2009. There is no ambiguity or any doubt on this fact that when the assessment for the assessment year 2007-2008 was completed on 27.11.2009 by the ITO, Ward-9(2)-1 who was having jurisdiction over the assessee as taken over from the ITO, Ward-10(3)-4 due to change of the address of the assessee. Thus, it is clear that when the notice u/s 148 of the Income Tax Act issued on 31.3.2010, the ITO, Ward-10(3)-4 was ceased to have any jurisdiction being an Assessing Officer over the assessee. It appears that after issuing the notice u/s 148, the Assessing Officer, who has issued the said notice, realized the lack of jurisdiction over the assessee and accordingly the reassessment was undertaken by the Assessing Officer-ITO, Ward-9(2)-1, Mumbai having jurisdiction over the assessee. The assessee raised the objection regarding validity of notice issued u/s 148 due to lack of jurisdiction of the Assessing Officer who has issued the notice. The AO rejected the objection raised by the assessee and observed in para 6 as under:\u003c/para\u003e\r\n\t\t\t\t\u003cpara class=\"quote\"\u003e\"With respect to your 1st contention that the notice u/s 148 loses its jurisdiction, it needs to be stated that the Officer issuing the notice u/s 148 was the officer holding jurisdiction over you and had accordingly completed assessment proceedings u/s 143(3). Further, even if it is assumed, though no accepted, that the notice had been issued by ITO-10(3)(4), what is paramount is who is the Officer with the right jurisdiction and whether the same officer is taking the final decision in respect of the assessment proceedings. Thus, the moment the current officer taken the final decision on the subject matter of reassessment, no process of law or provisions of the Act are vitiated.\"\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e8.\u003c/b\u003e It is manifest from the assessment order that the AO has not really disputed this fact that the Assessing Officer who had issued notice u/s 148 was not having any jurisdiction over the assessee. However, the objection of the assessee was rejected on the reasoning that when the final decision in respect of reassessment proceedings has been taken by the AO who is having the jurisdiction, then, there is no violation of provisions of law of the Act. Similarly, the CIT (A) has also rejected the objection raised by the assessee in para 2.3 as under:\u003c/para\u003e\r\n\t\t\t\t\u003cpara class=\"quote\"\u003e\"I have perused the assessment order and the written submissions. The issue of administrative jurisdiction has been addressed by the AO while disposing of its objection at page-3 para-6 of the assessment order. I am in agreement with stand taken by the AO. As no point of time to the jurisdiction was held by two officers while the proceedings have been initiated by ITO-10(3)(4) but has been concluded by ITO 9(2)(1) who have administrative jurisdiction of the case. In any case, the issue of territorial / administrative jurisdiction does not carry much weight. As regards the legal objection on change of opinion, after perusal of the original assessment order it cannot be inferred that this issue was specifically examined therein. Taking into account all the facts and circumstances, ground no.1 is rejected.\"\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e9. \u003c/b\u003eThough, both AO and CIT (A) has not disputed the factual position that before the notice u/s 148 was issued, the jurisdiction was transferred from the Assessing Officer who has issued the notice u/s 148 and even the assessment for the assessment year 2007-2008 was completed by the new Assessing Officer who was having jurisdiction over the assessee before the said notice u/s 148 was issued.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e10. \u003c/b\u003eWe are conscious that the issue of the question of jurisdiction of Assessing Officer cannot be raised first time before us after completion of the assessment but, since the assessee has raised this objection right from the beginning and the Assessing Officer as well as CIT (A) has given a finding, therefore, this issue does not question the jurisdiction of the AO who has completed the re-assessment but questions the validity of Notice u/s 148 and emanates from the impugned orders of the authorities below. The definition of the Assessing Officer as provided u/s 2(7A) of the Income Tax Act means \"the Assistant Commissioner or Deputy Commissioner or Assistant Director or Deputy Director or ITO who has vested with the relevant jurisdiction by virtue of directions or orders issued under sub-section 1 or sub-section (2) of section 120 or any other provisions of this Act…………….\"\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e11.\u003c/b\u003e Section 148 mandates issue of notice before assessment, reassessment or computation u/s 147. As per section 148, it is mandatory that the Assessing Officer shall serve on the assessee a notice required him to furnish a return. The expression \"Assessing Officer\" used in the section 148 means \u0027the Assessing Officer vested with the jurisdiction over the assessee as stipulated in the definition u/s 2(7A) by virtue of the directions / orders passed u/s 120, sub-section (1) \u0026amp; (2)\u0027. Thus, the notice u/s 148 is required to be issued by the Assessing Officer who is vested with the jurisdiction over the assessee on the basis of the criteria of territorial area, a person or classes of persons, income or classes of incomes and cases or classes of cases as enumerated in sub-section 3 of section 120 of Income Tax Act. It is not the case of the Revenue that the Assessing Officer who has issued the notice u/s 148 was vested with the jurisdiction by virtue of any direction or orders issued under sub-section (1) or (2) of section 120 of the Income Tax Act. Thus, there is no dispute about the jurisdiction vested with the Assessing Officer - ITO, Ward-9(2)-1 over the assessee when the notice u/s 148 was issued by the ITO, Ward-10(3)-4. When it is apparent that the notice u/s 148 was issued by the AO who was not vested with the jurisdiction over the assessee then, the same is patently illegal and void. Consequently, the reassessment proceedings and order in pursuant to the illegal notice u/s 148 are also \u003ci\u003evoid ab initio \u003c/i\u003eand liable to be set aside. Hence, we hold that the reassessment on the basis of an illegal notice u/s 148 is not sustainable and accordingly the same is set aside.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e12. \u003c/b\u003eSince, we hold the reassessment as invalid and set aside, then, we do not propose to go into the merits of the issue raised in the Revenue\u0027s appeal being infectious.\u003c/para\u003e\r\n\t\t\t\t\u003cpara\u003e\r\n\t\t\t\t\t\u003cb\u003e13. \u003c/b\u003eIn the result, the assessee\u0027s appeal is allowed and Revenue\u0027s appeal is dismissed. \u003c/para\u003e\r\n\t\t\t\t\u003cpara class=\"right\"\u003e■■\u003c/para\u003e\r\n\t\t\t\u003c/order\u003e\r\n\t\t\u003c/caseOrder\u003e\r\n\t\u003c/body\u003e\r\n\t\u003cfootnote\u003e\r\n\t\t\u003cdbs_infavourof id=\"111140000000000002\"\u003e\r\n\t\t\t\u003clink type=\"foot\" display=\"normal\" id=\"fn1\" href=\"#rfn1\"\u003e*       \u003c/link\u003eIn favour of assessee\u003c/dbs_infavourof\u003e\r\n\t\u003c/footnote\u003e\r\n\u003c/document\u003e";
 
 function generateFinalXML(c) {
+  if (c && c.xmlOverride) return c.xmlOverride;
   return SAMPLE_EDITOR_XML;
   return '<?xml version="1.0" encoding="UTF-8"?>\n' +
 '<case xmlns:aic="http://aic.legal/schema/v2" id="' + c.id + '" guid="' + c.guid + '" treatment="' + c.tr + '" marking="' + c.mk + '">\n' +
@@ -5057,13 +5543,21 @@ function escapeXml(unsafe) {
 }
 
 function execEd(cmd, val = null) {
-  document.execCommand(cmd, false, val);
+  const editor = document.getElementById('editor-component-content') || document.getElementById('taxmann-editor');
+  if (editor) {
+    editor.focus();
+    document.execCommand(cmd, false, val);
+  }
 }
 
 function insertHyperlink() {
   const link = prompt('Enter Citation / Statute DB Target to hyperlink (e.g., Section 153A or Section 68):', 'Section 153A');
   if (link) {
-    document.execCommand('insertHTML', false, '<a class="taxmann-link" onclick="openLinkModal(\'' + link + '\')">' + link + '</a>');
+    const safeLink = escapeHtml(link);
+    const editor = document.getElementById('editor-component-content') || document.getElementById('taxmann-editor');
+    if (!editor) return;
+    editor.focus();
+    document.execCommand('insertHTML', false, '<a class="taxmann-link" onclick="openLinkModal(this.textContent)">' + safeLink + '</a>');
     toast('Inserted hyperlinked DB reference: ' + link);
   }
 }
@@ -5093,8 +5587,9 @@ function downloadXmlFile() {
   toast('Downloaded ' + (state.selectedCase.id || 'case') + '.xml');
 }
 
-function openPdfExternal(pdfPath) {
-  window.open(pdfPath, '_blank');
+function toggleWorkspacePdf() {
+  state.pdfSplit = !state.pdfSplit;
+  render();
 }
 
 function startResizing(e) {
@@ -5146,14 +5641,22 @@ function confirmQCPush() {
 }
 
 function raiseTicket() {
-  const c = state.selectedCase;
+  const c = state.selectedCase || { id: '', title: 'a new ticket' };
   const root = document.getElementById('modal-root');
   root.innerHTML = '<div class="modal-ov" onclick="if(event.target===this) closeModal()">' +
     '<div class="modal-box">' +
       '<h2 style="margin:0 0 8px;font-size:15px;color:var(--tx)">Raise Ticket</h2>' +
       '<p style="font-size:12.5px;color:var(--mu);margin:0 0 14px">Report an issue for <b>' + escapeHtml(c.id) + ' · ' + escapeHtml(c.title) + '</b>.</p>' +
-      '<div class="form-group" style="margin-bottom:12px"><label class="form-label" for="ticket-subject">Subject</label><input id="ticket-subject" type="text" value="Case editor support" maxlength="120"></div>' +
-      '<div class="form-group"><label class="form-label" for="ticket-description">Description</label><textarea id="ticket-description" rows="4" maxlength="2000" placeholder="Describe the issue..." style="resize:vertical"></textarea></div>' +
+      '<div class="form-grid">' +
+        '<div class="form-group"><label class="form-label" for="ticket-document-id">Document ID</label><input id="ticket-document-id" type="text" value="' + escapeHtml(c.id) + '"' + (state.selectedCase ? ' readonly' : '') + '></div>' +
+        '<div class="form-group"><label class="form-label" for="ticket-document-type">Document Type</label><select id="ticket-document-type"><option>Judgment</option><option>Digest</option><option>XML</option><option>SLD</option><option>Other</option></select></div>' +
+        '<div class="form-group"><label class="form-label" for="ticket-status">Status</label><select id="ticket-status"><option>Open</option><option>In Progress</option><option>Resolved</option></select></div>' +
+        '<div class="form-group"><label class="form-label" for="ticket-priority">Priority</label><select id="ticket-priority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>' +
+        '<div class="form-group"><label class="form-label" for="ticket-assigned-to">Assigned To</label><input id="ticket-assigned-to" type="text" value="' + escapeHtml(state.activeProfile) + '"></div>' +
+        '<div class="form-group"><label class="form-label" for="ticket-raised-by">Raised By</label><input id="ticket-raised-by" type="text" value="' + escapeHtml(state.activeProfile) + '" readonly></div>' +
+      '</div>' +
+      '<div class="form-group" style="margin-top:12px"><label class="form-label" for="ticket-subject">Subject</label><input id="ticket-subject" type="text" maxlength="120"></div>' +
+      '<div class="form-group" style="margin-top:12px"><label class="form-label" for="ticket-description">Description</label><textarea id="ticket-description" rows="4" maxlength="2000" placeholder="Describe the issue..." style="resize:vertical"></textarea></div>' +
       '<div style="display:flex;justify-content:flex-end;gap:6px;margin-top:16px">' +
         '<button class="btn sm" onclick="closeModal()">Cancel</button>' +
         '<button class="btn sm p" onclick="submitRaiseTicket()">Submit Ticket</button>' +
@@ -5254,30 +5757,9 @@ function saveCaseDetailsAssignment() {
     toast('Select a user assigned to the selected stage.', 'error');
     return;
   }
-  const previousStage = c.detailsStage || c.assignedStage || c.qcStage || c.explorerStage || '';
-  const previousUser = c.assignedTo || assignedToLabel(c);
-  c.detailsStage = stage;
-  c.assignedStage = stage;
-  c.assignedTo = user;
-  if (!Array.isArray(c.caseHistory)) c.caseHistory = [];
-  if (previousStage !== stage) {
-    c.caseHistory.unshift({
-      action: 'Stage updated to ' + stage,
-      user: state.activeProfile,
-      date: new Date().toLocaleString()
-    });
-  }
-  if (previousUser !== user) {
-    c.caseHistory.unshift({
-      action: 'Assigned to ' + user,
-      user: state.activeProfile,
-      date: new Date().toLocaleString()
-    });
-  }
-  state.detailsDraftStage = stage;
-  state.detailsDraftUser = user;
-  render();
-  toast('Case assignment saved.');
+  state.pendingAssignment = { caseIndex: state.detailsCaseIndex, stage, user, mode: 'details' };
+  renderAssignmentConfirmation();
+  return;
 }
 
 function addCaseDetailsComment() {
@@ -5389,7 +5871,7 @@ function renderAssignDialog() {
       '<p style="font-size:12.5px;color:var(--mu);margin:0 0 14px">Assign case ID <b>' + escapeHtml(c.id) + '</b> to a stage and team member.</p>' +
       '<div class="form-grid">' +
         '<div class="form-group"><label class="form-label" for="case-assignment-stage">Stage</label><select id="case-assignment-stage" onchange="updateAssignmentStage(this.value)"><option value="">Select Stage</option>' +
-          Object.keys(ASSIGNMENT_USERS_BY_STAGE).map(stageName => '<option value="' + stageName + '"' + (stage === stageName ? ' selected' : '') + '>' + stageName + '</option>').join('') +
+          CASE_DETAILS_STAGES.map(stageName => '<option value="' + escapeHtml(stageName) + '"' + (stage === stageName ? ' selected' : '') + '>' + escapeHtml(stageName) + '</option>').join('') +
         '</select></div>' +
         '<div class="form-group"><label class="form-label" for="case-assignment-user">User</label><select id="case-assignment-user" onchange="state.selectedCase.assignmentDraftUser=this.value"' + (!stage ? ' disabled' : '') + '><option value="">Select User</option>' +
           users.map(userName => '<option value="' + escapeHtml(userName) + '"' + (user === userName ? ' selected' : '') + '>' + escapeHtml(userName) + '</option>').join('') +
@@ -5428,12 +5910,67 @@ function assignSelectedCase() {
     toast('Select a stage and user to assign this case.');
     return;
   }
-  c.assignedStage = stage;
-  c.assignedTo = user;
-  delete c.assignmentDraftStage;
-  delete c.assignmentDraftUser;
+  state.pendingAssignment = { caseIndex: CASES.indexOf(c), stage, user, mode: 'editor' };
+  renderAssignmentConfirmation();
+}
+
+function renderAssignmentConfirmation() {
+  const pending = state.pendingAssignment;
+  const c = pending && CASES[pending.caseIndex];
+  if (!pending || !c) return;
+  const currentStage = explorerStageLabel(c);
+  const currentStatus = explorerStatus(c);
+  const root = document.getElementById('modal-root');
+  root.innerHTML = '<div class="modal-ov" onclick="if(event.target===this) closeModal()">' +
+    '<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="assignment-confirm-title">' +
+      '<h2 id="assignment-confirm-title" style="margin:0 0 8px;font-size:15px">Confirm Case Assignment</h2>' +
+      '<p style="font-size:12.5px;line-height:1.55;margin:0;color:var(--mu)">This case is currently at <b>' + escapeHtml(currentStage) + '</b> with status <b>' + escapeHtml(currentStatus) + '</b>.</p>' +
+      '<p style="font-size:12.5px;line-height:1.55;margin:8px 0 0;color:var(--mu)">Are you sure you want to assign it to <b>' + escapeHtml(pending.stage) + '</b> and allot it to <b>' + escapeHtml(pending.user) + '</b>?</p>' +
+      '<div style="display:flex;justify-content:flex-end;gap:6px;margin-top:16px">' +
+        '<button class="btn sm" onclick="cancelAssignmentConfirmation()">Cancel</button>' +
+        '<button class="btn sm p" onclick="confirmCaseAssignment()">Confirm Assignment</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function cancelAssignmentConfirmation() {
+  state.pendingAssignment = null;
   closeModal();
-  toast(c.id + ' assigned to ' + user + ' for ' + stage + '.');
+}
+
+function confirmCaseAssignment() {
+  const pending = state.pendingAssignment;
+  const c = pending && CASES[pending.caseIndex];
+  if (!pending || !c) return closeModal();
+  const previousStage = c.detailsStage || c.assignedStage || c.qcStage || c.explorerStage || '';
+  const previousUser = c.assignedTo || assignedToLabel(c);
+  const reassignedAt = new Date();
+  const previousAssignedAt = c.assignedAt ? new Date(c.assignedAt) : null;
+  if (previousUser && previousAssignedAt && !Number.isNaN(previousAssignedAt.getTime())) {
+    if (!Array.isArray(c.assignmentHistory)) c.assignmentHistory = [];
+    c.assignmentHistory.push({
+      user: previousUser,
+      assignedAt: previousAssignedAt.toISOString(),
+      reassignedAt: reassignedAt.toISOString(),
+      durationMs: Math.max(0, reassignedAt.getTime() - previousAssignedAt.getTime())
+    });
+  }
+  c.detailsStage = pending.stage;
+  c.assignedStage = pending.stage;
+  c.assignedTo = pending.user;
+  c.assignedBy = state.activeProfile;
+  c.assignedAt = reassignedAt.toISOString();
+  if (!Array.isArray(c.caseHistory)) c.caseHistory = [];
+  if (previousStage !== pending.stage) c.caseHistory.unshift({ action: 'Stage updated to ' + pending.stage, user: state.activeProfile, date: c.assignedAt });
+  if (previousUser !== pending.user) c.caseHistory.unshift({ action: 'Assigned to ' + pending.user, user: state.activeProfile, date: c.assignedAt });
+  if (pending.mode === 'editor') {
+    delete c.assignmentDraftStage;
+    delete c.assignmentDraftUser;
+  }
+  state.pendingAssignment = null;
+  closeModal();
+  toast(c.id + ' assigned to ' + pending.user + ' for ' + pending.stage + '.');
   render();
 }
 
@@ -5441,19 +5978,85 @@ function submitRaiseTicket() {
   const c = state.selectedCase;
   const subject = document.getElementById('ticket-subject').value.trim();
   const description = document.getElementById('ticket-description').value.trim();
-  if (!subject || !description) {
-    toast('Enter a subject and description before submitting the ticket.');
+  const documentType = document.getElementById('ticket-document-type').value;
+  const status = document.getElementById('ticket-status').value;
+  const priority = document.getElementById('ticket-priority').value;
+  const assignedTo = document.getElementById('ticket-assigned-to').value.trim();
+  const raisedBy = document.getElementById('ticket-raised-by').value.trim();
+  if (!subject || !description || !assignedTo) {
+    toast('Complete the ticket subject, description, and assignee before submitting.');
     return;
   }
-  if (!Array.isArray(c.tickets)) c.tickets = [];
   const ticketId = 'AIC-TKT-' + Date.now();
-  c.tickets.push({ id: ticketId, subject, description, createdAt: new Date().toISOString() });
+  const ticket = {
+    id: ticketId,
+    date: new Date().toLocaleDateString('en-GB'),
+    documentId: document.getElementById('ticket-document-id').value.trim(),
+    documentType,
+    status,
+    priority,
+    assignedTo,
+    raisedBy,
+    subject,
+    description
+  };
+  if (!Array.isArray(state.tickets)) state.tickets = [];
+  state.tickets.unshift(ticket);
+  if (state.selectedCase) {
+    if (!Array.isArray(c.tickets)) c.tickets = [];
+    c.tickets.unshift(ticket);
+  }
   closeModal();
-  toast('Ticket ' + ticketId + ' raised for ' + c.id + '.');
+  toast('Ticket ' + ticketId + ' raised.');
 }
 
 function closeModal() {
   document.getElementById('modal-root').innerHTML = '';
+}
+
+function openFindStatusModal() {
+  const root = document.getElementById('modal-root');
+  if (!root) return;
+  root.innerHTML = '<div class="modal-ov" onclick="if(event.target===this) closeModal()">' +
+    '<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="find-status-title">' +
+      '<h2 id="find-status-title" style="margin:0 0 8px;font-size:15px">Find Status</h2>' +
+      '<p style="margin:0 0 12px;color:var(--mu);font-size:12px">Enter a GUID or Collection ID to view the case law stage and status.</p>' +
+      '<input id="find-status-id" type="text" class="form-control" placeholder="GUID / Collection ID" autocomplete="off" onkeydown="if(event.key===\'Enter\') findCaseStatus()">' +
+      '<div id="find-status-result" style="margin-top:12px"></div>' +
+      '<div style="display:flex;justify-content:flex-end;gap:6px;margin-top:16px">' +
+        '<button type="button" class="btn sm" onclick="closeModal()">Close</button>' +
+        '<button type="button" class="btn sm p" onclick="findCaseStatus()">Find Status</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+  setTimeout(() => {
+    const input = document.getElementById('find-status-id');
+    if (input) input.focus();
+  }, 0);
+}
+
+function findCaseStatus() {
+  const input = document.getElementById('find-status-id');
+  const result = document.getElementById('find-status-result');
+  const query = String(input && input.value || '').trim().toLowerCase();
+  if (!query) {
+    if (result) result.innerHTML = '<div class="form-error">Enter a GUID or Collection ID.</div>';
+    return;
+  }
+  const found = CASES.find(c => [c.id, c.guid, c.collectionId, c.collectionID, c.collection_id]
+    .some(value => String(value == null ? '' : value).trim().toLowerCase() === query));
+  if (!result) return;
+  if (!found) {
+    result.innerHTML = '<div class="form-error">No case law found for <b>' + escapeHtml(input.value.trim()) + '</b>.</div>';
+    return;
+  }
+  result.innerHTML = '<div class="card" style="padding:12px;background:var(--bg)">' +
+    '<div style="font-weight:700;margin-bottom:8px">' + escapeHtml(found.id || found.guid || found.collectionId || 'Case law') + '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">' +
+      '<div><span style="color:var(--mu)">Stage</span><br><b>' + escapeHtml(explorerStageLabel(found)) + '</b></div>' +
+      '<div><span style="color:var(--mu)">Status</span><br><b>' + escapeHtml(explorerStatus(found)) + '</b></div>' +
+    '</div>' +
+  '</div>';
 }
 
 function executePush() {
